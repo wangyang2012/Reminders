@@ -1,0 +1,74 @@
+ready
+load
+focus
+change
+click
+
+
+
+$( document ).ready(function() {
+		
+		$( ".td_format_monnaie" ).each(function( index ) {
+			var txt = $(this).text().replace(/\,/g, ' ').replace(/\./g, ',');
+			$(this).text(txt);
+		});
+		
+		
+		$('input.format_monnaie').change(function(event){
+
+			txt = $(this).val();
+			var regOnlyNumber = new RegExp('^[0-9]+$');
+			if (txt.indexOf(",") < 0 && regOnlyNumber.test(txt)) {
+				txt += ",00";
+				$(this).val(txt);
+			}
+			if (!isFormatMonnaie(txt)) {
+				$(this)
+				.popover({title: 'Erreur de saisie', content: "Veuillez utiliser le format monétaire avec une virgule et deux chiffres après la virgule", template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'})
+				.popover('show');
+			} else{
+				$(this).popover('hide');
+			}
+			
+		});
+		
+		$('input.format_monnaie').focus(function(event){
+
+			txt = $(this).val();
+			if (txt != null && txt != "" && !isFormatMonnaie(txt)) {
+				$(this)
+				.popover({title: 'Erreur de saisie', content: "Veuillez utiliser le format monétaire avec une virgule et deux chiffres après la virgule", template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'})
+				.popover('show');
+			} else{
+				$(this).popover('hide');
+			}
+			
+		});
+	
+		
+		
+// 		$('#tabs a').click(function (e) {
+// 			$("a[href='#infos']").on('show.bs.tab', function(e) {
+// 				$('.margin_right').css( "height", 890 );
+// 			 });
+			
+// 			$("a[href='#detail']").on('show.bs.tab', function(e) {
+// 			      $('.margin_right').css( "height", 890 );
+// 			 });
+			
+// 			$("a[href='#historique']").on('show.bs.tab', function(e) {
+// 				var clientHeight = $(window).height() - $('#header_center').height();
+// 			      console.log('#historique: '+clientHeight);
+// 			      $('.margin_right').css( "height", clientHeight );
+// 			 });
+			
+// // 			console.log("new Height: " + e.target.height());
+// // 			console.log("new Height: " + e.relatedTarget.height());
+// // 			setTimeout(function() {
+// // 				// Pour recalculer la hauteur quand l'onglet est changé, il faut attendre 100ms pour que le navigateur recalcul
+				
+// // 				calculHeight();
+// // 			}, 500);
+// 		});
+	
+	});
