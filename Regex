@@ -1,0 +1,37 @@
+** General **
+? ==> 0 or one
++ ==> 1 or more
+* ==> 0 or more
+var patt1 = /[1-4]/g;
+^	==> begin
+$	==> end
+. ==>	whatever character
+
+a{3}	correspond exactement à aaa
+a{2,}	correspond à un minimum de deux a consécutifs
+soit aa, aaa, aaaaa....
+a{2,4}	correspond uniquement à aa, aaa, aaaa
+http://www.expreg.com/symbole.php
+
+
+1. Test Regex in Java
+  // You have to write double \\ for Java compiler
+  if (!value.matches("^[0-9]\\d*\\,\\d{2}$")) {
+		error.add("Le champ " + controles[0] + " (" + value + ") n'est pas au format monétaire avec 2 chiffres après la virgule");
+	}
+
+
+2. Test Regex in Javascript
+  2.1 Test
+
+    2.1.1 by match() function
+      return value.match(/^\d+\,\d{2}$/);
+      
+    2.1.2 by RegExp object
+      var txt = "1a23";
+      var regIsOnlyNumber = new RegExp('^[0-9]+$');
+      return regIsOnlyNumber.test(txt))
+
+  2.2 Replace
+      // the g means to replaceAll()
+      var txt = $(this).text().replace(/\,/g, ' ').replace(/\./g, ',');
