@@ -1,0 +1,13 @@
+
+
+function calculHeight() {
+	var clientHeight = $(window).height() - $('#header_center').height();
+	if ($('.margin_right').height() < clientHeight) {
+		$('.margin_right').css( "height", clientHeight );
+	}
+    // console.log("margin_right(after)="+$('.margin_right').height());
+}
+	
+$( document ).ready(function() {
+    calculHeight();
+});
