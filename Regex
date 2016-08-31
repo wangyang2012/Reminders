@@ -35,3 +35,10 @@ http://www.expreg.com/symbole.php
   2.2 Replace
       // the g means to replaceAll()
       var txt = $(this).text().replace(/\,/g, ' ').replace(/\./g, ',');
+
+3. Examples
+	3.1 Date format (dd/MM/yyyy)
+	
+		if (!dateStr.matches("^(0?\\d|[12]\\d|3[01])/(0?\\d|1[012])/(\\d{4})$")) {
+			return false;
+		}
