@@ -1,0 +1,9 @@
+$('#dateEj').val() 
+
+$( ".td_format_monnaie" ).each(function( index ) {
+			var txt = $(this).text().replace(/\,/g, ' ').replace(/\./g, ',');
+			$(this).text(txt);
+		});
+		
+		
+$('#'+objet.id).datepicker( "setDate", new Date() );
