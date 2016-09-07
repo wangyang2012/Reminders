@@ -1,0 +1,19 @@
+Add not null constraint
+ALTER TABLE distributors ALTER COLUMN street SET NOT NULL;
+
+Change type
+ALTER TABLE arpege ALTER COLUMN nom_operation TYPE varchar(100);
+
+Add primary key
+ALTER TABLE ONLY activite
+    ADD CONSTRAINT pk_activite PRIMARY KEY (code_activite);
+    
+Add foreign key
+ALTER TABLE ONLY utilisateur
+    ADD CONSTRAINT fk_profil FOREIGN KEY (profil_id) REFERENCES profil(id);
+    
+Change owner
+ALTER TABLE arpege OWNER TO usaphir;
+
+Drop constraint
+alter table demande_engagement drop constraint if exists fk_de_op_sdsi;
