@@ -1,0 +1,17 @@
+  @Override
+	public Blocage getBlocageByPageAndIdElement(String page, Integer idElement, Utilisateur utilisateur) {
+		if (StringUtil.isEmptyString(page)) {
+			return null;
+		}
+
+		Criteria crit = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(Blocage.class);
+		crit.add(Restrictions.eq("page", page));
+		if (idElement != null && idElement > 0) {
+			crit.add(Restrictions.eq("idElement", idElement));
+		}
+		if (utilisateur != null) {
+			crit.add(Restrictions.eq("utilisateurEnCours.id", utilisateur.getId()));
+		}
+		crit.setMaxResults(1);
+		return (Blocage) crit.uniqueResult();
+	}
