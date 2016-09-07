@@ -1,0 +1,1 @@
+select det from DeEtat det inner join det.utilisateur utilisateur inner join det.etat etat where de.id = :de_id order by det.id desc limit 1
