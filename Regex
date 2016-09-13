@@ -13,6 +13,7 @@ soit aa, aaa, aaaaa....
 a{2,4}	correspond uniquement à aa, aaa, aaaa
 http://www.expreg.com/symbole.php
 
+[abc13] => a ou b ou c ou 1 ou 3
 
 1. Test Regex in Java
   // You have to write double \\ for Java compiler
@@ -30,7 +31,7 @@ http://www.expreg.com/symbole.php
     2.1.2 by RegExp object
       var txt = "1a23";
       var regIsOnlyNumber = new RegExp('^[0-9]+$');
-      return regIsOnlyNumber.test(txt))
+      return regIsOnlyNumber.test(txt));
 
   2.2 Replace
       // the g means to replaceAll()
@@ -42,3 +43,6 @@ http://www.expreg.com/symbole.php
 		if (!dateStr.matches("^(0?\\d|[12]\\d|3[01])/(0?\\d|1[012])/(\\d{4})$")) {
 			return false;
 		}
+
+        3.2 Number format(#,##)
+        txt.match(/^[0-9]+\,[0-9]{0,2}$/)
