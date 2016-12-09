@@ -7,6 +7,7 @@ var patt1 = /[1-4]/g;
 $	==> end
 . ==>	whatever character
 
+\s ==> space
 a{3}	correspond exactement à aaa
 a{2,}	correspond à un minimum de deux a consécutifs
 soit aa, aaa, aaaaa....
@@ -36,6 +37,8 @@ http://www.expreg.com/symbole.php
   2.2 Replace
       // the g means to replaceAll()
       var txt = $(this).text().replace(/\,/g, ' ').replace(/\./g, ',');
+      // delete all spaces
+      str.replace(/\s/g, '');
 
 3. Examples
 	3.1 Date format (dd/MM/yyyy)
