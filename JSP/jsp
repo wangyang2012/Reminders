@@ -1,0 +1,4 @@
+Contrôl IF
+
+<s:if test="%{!isLocked}"></s:if>
+<s:if test="#foo==null || #foo==''">0</s:if>
