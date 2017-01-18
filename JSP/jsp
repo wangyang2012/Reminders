@@ -1,4 +1,9 @@
 Contrôl IF
 
+// boolean
 <s:if test="%{!isLocked}"></s:if>
+
+
+// empty String
 <s:if test="#foo==null || #foo==''">0</s:if>
+<s:if test="%{ed.mapEdDetailRows[key].strTaxRate != null && ed.mapEdDetailRows[key].strTaxRate != ''}">
