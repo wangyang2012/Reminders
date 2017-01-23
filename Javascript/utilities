@@ -31,3 +31,16 @@ function isEmpty(str) {
         expr= "/oo/";
     string.match(expr);
 Performance tests (http://jsben.ch/#/RVYk7) are showing that indexOf might be the best choice, if it comes to a point where speed matters.
+
+
+************ SPLIT ************
+function splitString() {
+    var str = "How are you doing today?";
+    var res = str.split(" ");
+    var result = "";
+    for (var i in res)
+    {
+        result = result + " | " + res[i];
+    }
+    document.getElementById("demo").innerHTML = result;
+}
