@@ -1,3 +1,33 @@
 function isEmpty(str) {
     return (!str || 0 === str.length);
 }
+
+
+// Test if String contains substring
+1. indexOf
+    return string.indexOf(substring) != -1
+    // -1 don't contains
+
+2. (ES6) includes
+    string.includes(substring);
+    
+3. search
+    var string = "foo",
+        expr= "/oo/";
+    string.search(expr);
+    
+4. lodash includes
+    var string = "foo",
+        substring = "oo";
+    _.includes(string, substring);
+    
+5. RegExp
+    var string = "foo",
+        expr= "/oo/";
+    expr.test(string);
+
+6. Match
+    var string = "foo",
+        expr= "/oo/";
+    string.match(expr);
+Performance tests (http://jsben.ch/#/RVYk7) are showing that indexOf might be the best choice, if it comes to a point where speed matters.
