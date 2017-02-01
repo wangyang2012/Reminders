@@ -1,0 +1,15 @@
+****** Windows ******
+- download the msi file and install
+
+****** Linux ******
+// Tutorial online
+https://nodejs.org/en/download/package-manager/
+
+// get command of installation
+curl --silent --location https://rpm.nodesource.com/setup_7.x | bash -
+
+// install
+yum -y install nodejs
+
+// test
+node -v 
