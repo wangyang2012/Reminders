@@ -1,0 +1,2 @@
+# Change password
+sudo passwd user_name
