@@ -1,2 +1,7 @@
 # Change password
 sudo passwd user_name
+
+# Get my distribution name and version
+lsb_release -a
+cat /etc/*-release
+uname -a
