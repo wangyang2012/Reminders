@@ -44,3 +44,10 @@ function splitString() {
     }
     document.getElementById("demo").innerHTML = result;
 }
+
+************ REMOVE HTML TAGS ************
+// remove all HTML tags of a string
+private removeHtmlTags(str) {
+    return str.replace(/<(?:.|\n)*?>/gm, '');
+
+}
