@@ -45,6 +45,14 @@ function splitString() {
     document.getElementById("demo").innerHTML = result;
 }
 
+
+************ SPLICE: remove elements from array ************
+for(var i = array.length - 1; i >= 0; i--) {
+    if(array[i] === number) {
+       array.splice(i, 1);
+    }
+}
+
 ************ REMOVE HTML TAGS ************
 // remove all HTML tags of a string
 private removeHtmlTags(str) {
