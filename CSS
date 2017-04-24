@@ -2,3 +2,9 @@
     cursor: pointer;
     cursor: hand;
 }
+
+////// horizontal list
+// <ul class="nav nav-pills"></ul>
+ul {
+   overflow-x: auto;
+}
