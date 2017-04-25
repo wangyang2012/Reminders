@@ -8,3 +8,11 @@
 ul {
    overflow-x: auto;
 }
+
+// scroll 
+
+// get DOM object width:
+element.scrollWidth => total content width
+element.offsetWidth => visible content width + border width + scrollbar width
+element.clientWidth => visible content width without boders and scrollbars
+http://stackoverflow.com/questions/21064101/understanding-offsetwidth-clientwidth-scrollwidth-and-height-respectively
