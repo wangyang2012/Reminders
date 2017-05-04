@@ -1,0 +1,10 @@
+********* Disable autostart of MySql *********
+-- solution 1 --
+Open the terminal: Ctrl+Alt+T
+Open the mysql.conf file: nano /etc/init/mysql.conf
+Comment out the start on line near the top of the file, the start on might be spread across two lines, so comment out both. (comment adding # at the beginning)
+If you want to manually start mysql, use the following command:
+service mysql start
+
+-- solution 2 --
+sudo systemctl disable mysql
