@@ -32,6 +32,12 @@ function isEmpty(str) {
     string.match(expr);
 Performance tests (http://jsben.ch/#/RVYk7) are showing that indexOf might be the best choice, if it comes to a point where speed matters.
 
+7. Array contains
+    let table = new Array<Object>();
+    table.push(...);
+    if (table.lastIndexOf(Object) < 0) {
+        // not contains
+    }
 
 ************ SPLIT ************
 function splitString() {
