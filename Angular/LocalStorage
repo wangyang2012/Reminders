@@ -1,0 +1,14 @@
+https://github.com/PillowPillow/ng2-webstorage
+
+****** package.json ******
+"ng2-webstorage": "^1.8.0",
+
+****** app.module.ts ******
+import { LocalStorageService } from 'ng2-webstorage';
+providers: [LocalStorageService]
+
+****** app.component.ts ******
+constructor(private localStorage: LocalStorageService) {
+    this.localStorage.store("test", "OK");
+    console.log(this.localStorage.retrieve("test"));
+}
