@@ -1,0 +1,2 @@
+<div [ngClass]="sharedNbColumnsObject?.nbColumns > 1 ? 'col-12' : 'col-10'">
+<div [ngClass]="{'col-10': sharedNbColumnsObject?.nbColumns == 1, 'col-12' : sharedNbColumnsObject?.nbColumns > 1}">
