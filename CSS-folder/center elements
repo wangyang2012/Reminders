@@ -1,0 +1,8 @@
+
+#Center a ngb-pagination component
+.pagination-content {
+    text-align: center;
+    ngb-pagination {
+        display: inline-block;
+    }
+}
