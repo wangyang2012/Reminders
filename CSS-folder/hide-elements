@@ -1,0 +1,4 @@
+visibility: hidden; // let empty space of original elements
+display: none; // no space of original elements
+
+http://www.journaldunet.com/developpeur/tutoriel/css/060718-difference-visibility-hidden-display-none.shtml
