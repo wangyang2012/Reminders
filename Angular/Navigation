@@ -1,0 +1,13 @@
+FROM
+
+constructor(private router:Router) {}
+call() {
+  this.router.navigate(['/search'], {queryParams: { 'key': 'value' } });
+}
+
+TO
+constructor(private activatedRoute:ActivatedRoute) {
+  this.activatedRoute.queryParams.subscribe(params=>{
+    console.log(params['key']);
+  }
+}
