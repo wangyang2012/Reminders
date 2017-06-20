@@ -1,0 +1,23 @@
+****** add to specific index position ******
+
+arr.splice(indexToInsert, nbToDelete, itemToInsert);
+
+arr.splice(index, 0, item); will insert item into arr at the specified index (deleting 0 items first, that is, it's just an insert).
+
+In this example we will create an array and add an element to it into index 2:
+
+var arr = [];
+
+arr[0] = "Jani";
+arr[1] = "Hege";
+arr[2] = "Stale";
+arr[3] = "Kai Jim";
+arr[4] = "Borge";
+
+console.log(arr.join());
+arr.splice(2, 0, "Lene");
+console.log(arr.join());
+The output of the code above will be:
+
+Jani,Hege,Stale,Kai Jim,Borge
+Jani,Hege,Lene,Stale,Kai Jim,Borge
