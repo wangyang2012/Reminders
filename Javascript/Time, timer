@@ -1,0 +1,13 @@
+****** format ******
+new Date().toISOString(); YYYY-MM-DDThh:mm:ssZ
+
+****** calcul difference ******
+let now = new Date();
+duration = new Date(now.getTime() - this.startDateTime.getTime());
+
+****** timer ******
+let timerId = setInterval(() =>{
+    // do something
+}, 1000); // start
+
+clearInterval(timerId); // stop
