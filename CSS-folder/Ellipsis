@@ -2,7 +2,7 @@
   #divEllipsis {
 		background: yellow;
 		width: 100px;
-		display: block
+		display: block;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
