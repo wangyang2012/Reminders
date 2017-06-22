@@ -1,0 +1,16 @@
+.catch((error: any) => {
+    this._loaderService.isOpen = false;
+    return Observable.throw(error);
+})
+
+
+
+this._documentService.documentUsingPOST(params['id']))
+  .catch((error: any) => {
+      this._loaderService.isOpen = false;
+      return Observable.throw(error);
+  })
+  .subscribe((document: DocumentES) => {
+      this.document = document;
+      this._loaderService.isOpen = false;
+  });
