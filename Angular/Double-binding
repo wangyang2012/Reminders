@@ -1,0 +1,13 @@
+<component [(x)]="component-value"></component>
+
+component.ts:
+
+@Input()
+x: any;
+
+@Output()
+xChange: EventEmitter();
+
+onChange() {
+  this.xChange.emit(this.x);
+}
