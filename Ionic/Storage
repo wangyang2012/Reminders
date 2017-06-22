@@ -1,0 +1,22 @@
+****** Inject in app.module.ts******
+export function provideStorage() { return new Storage(); }
+
+@NgModule({
+    imports: [
+        ......
+    ],
+    declarations: [
+        ......
+    ],
+    providers: [
+        ......,
+        {
+            provide: Storage,
+            useFactory: provideStorage
+        },
+        ......
+    ],
+    exports: [......]
+})
+export class AppModule {
+}
