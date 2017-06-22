@@ -1,0 +1,12 @@
+<style>
+  #divEllipsis {
+		background: yellow;
+		width: 100px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
+
+<div id="divEllipsis">
+	<span>qsd:lqehrmlfkqsd,lvmsdfjqsdfgfklmhjquiojsdnlhifmqsdjkfhsdjiomfsd</span>
+</div>
