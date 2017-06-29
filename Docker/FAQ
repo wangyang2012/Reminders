@@ -1,0 +1,12 @@
+Status: Downloaded newer image for docker.rech.priv.ina:5001/ina/research/otmedia/mysql-otmedia:otm-v1-my5.7.17-jessie
+Pulling elasticsearch-hq (docker.rech.priv.ina:5000/thebennos/docker-nginx-elasticsearch-hq:latest)...
+ERROR: Get https://docker.rech.priv.ina:5000/v1/_ping: http: server gave HTTP response to HTTPS client
+
+Resolution:
+1. create file **/etc/docker/daemon.json**:
+
+{"insecure-registries":["docker.rech.priv.ina:5001", "docker.rech.priv.ina:5000"] }
+
+
+2. restart Docker daemon
+/etc/init.d/docker restart
