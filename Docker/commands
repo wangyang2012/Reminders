@@ -1,0 +1,8 @@
+docker ps
+docker exec CONTAINER COMMAND
+
+
+docker pull IMAGE_NAME
+docker-compose -f DOCKERFILTE up
+docker-compose -f DOCKERFILTE down
+docker-compose -f DOCKERFILTE start
