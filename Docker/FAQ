@@ -7,6 +7,8 @@ Resolution:
 
 {"insecure-registries":["docker-repo:5001", "docker-repo:5000"] }
 
+2. add user to Group "docker" of Linux
+id // to check user groups
 
-2. restart Docker daemon
+3. restart Docker daemon
 /etc/init.d/docker restart
