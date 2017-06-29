@@ -5,7 +5,7 @@ ERROR: Get https://docker.rech.priv.ina:5000/v1/_ping: http: server gave HTTP re
 Resolution:
 1. create file **/etc/docker/daemon.json**:
 
-{"insecure-registries":["docker.rech.priv.ina:5001", "docker.rech.priv.ina:5000"] }
+{"insecure-registries":["docker-repo:5001", "docker-repo:5000"] }
 
 
 2. restart Docker daemon
