@@ -1,0 +1,115 @@
+version: '2'
+
+networks:
+  default:
+    external:
+      name: network0
+
+services:
+  zookeeper:
+    image: "docker-repo:5001/folder/zookeeper:v1-zk3.4.6-openjdk8-alpine"
+    ports:
+      - "2181:2181"
+  kafka:
+    image: "docker-repo:5001/folder/kafka:v1-kf0.10.1.1-openjdk8-alpine"
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_MAX_REQUEST_SIZE: 15000000
+      KAFKA_MESSAGE_MAX_BYTES: 15000000
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+    depends_on:
+      - zookeeper
+
+  trifecta:
+    image: "docker-repo:5001/folder/trifecta:v1-tri0.22.0rc8b-kf0.10.1.1-openjdk8-alpine"
+    ports:
+      - "9005:9000"
+    environment:
+      ZK_HOST: "zookeeper\\:2181"
+    depends_on:
+      - kafka
+
+  mongodb:
+    image: "docker-repo:5001/folder/mongodb:v1-mongo3.4.2-jessie"
+    ports:
+      - "27017:27017"
+
+  mongoclient:
+    image: "docker-repo:5000/mongoclient/mongoclient"
+    ports:
+      - "9006:3000"
+    environment:
+      MONGO_URL: mongodb://mongodb:27017
+
+  mysql:
+    image: "docker-repo:5001/folder/otmedia/mysql-otmedia:otm-v1-my5.7.17-jessie"
+    environment:
+       - MYSQL_USER=root
+       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "3307:3306"
+    command: mysqld --lower_case_table_names=1 --skip-ssl
+
+  elasticsearch:
+    image: "docker-repo:5001/folder/elasticsearch:v1-es2.4.1-openjdk8-jessie"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    command: [-Des.node.name="Ricochet", -Des.network.host=0.0.0.0, -Des.network.bind_host=0.0.0.0, -Des.network.publish_host=0.0.0.0]
+
+  elasticsearch-hq:
+    image: "docker-repo:5000/thebennos/docker-nginx-elasticsearch-hq"
+    ports:
+      - "9007:80"
+    environment:
+        - HOST=localhost:9200
+        - PORT=9200
+#  nginx:
+#    image: "docker-repo:5001/folder/otmedia/nginx-otmedia:otm-v1-ngx1.11-jessie"
+#    ports:
+#        - 9090:80
+#    volumes:
+#        - ./otmedia-data/otmediaplus-ui-current-preprod:/etc/nginx/html/:ro
+
+  configserver:
+    image: "docker-repo:5001/folder/otmedia/config-server:1.0.0"
+    ports:
+       - 8888:8888
+    volumes:
+        - /rex/local/otmedia/conf/:/tmp/config
+    command: "--spring.profiles.active=native --spring.cloud.config.server.native.searchLocations=file:///tmp/config"
+
+  registryserver:
+    image: "docker-repo:5001/folder/otmedia/registry-server:1.0.0"
+    ports:
+       - 8761:8761
+
+  monitoring-elk:
+    image: "docker-repo:5001/folder/otmedia/monitoring-elk:v3-elk540-baseimage"
+    ports:
+      - "5601:5601"
+      - "9201:9200"
+      - "5044:5044"
+      - "5000:5000"
+
+  vortex:
+    image: "docker-repo:5001/ina/dlweb/backend"
+    ports:
+      - "4348:4348"
+      - "4338:4338"
+    volumes:
+      - /rex/local/otmedia:/rex/local/otmedia
+    command: /opt/dlweb_backend/side_projects/otmedia/start_all.sh
+
+  authserver:
+    image: "docker-repo:5001/folder/auth-server:1.0.0"
+    ports:
+      - 9999:9999
+    # How to request an Access Token (for now, client secrets are statically defined - they will be dynamically set/retrieved in the next sprint):
+    # curl -XPOST "otmediaclient:otmediasecret@localhost:9999/uaa/oauth/token" -d "grant_type=password&username=otmediareader&password=otmediareader-password"
