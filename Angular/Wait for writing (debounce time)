@@ -1,0 +1,7 @@
+Observable.fromEvent(this.filter.nativeElement, 'keyup')
+.debounceTime(150)
+.distinctUntilChanged()
+.subscribe(() => {
+    if (!this.dataSource) { return; }
+    this.dataSource.filter = this.filter.nativeElement.value;
+});
