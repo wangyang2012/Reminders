@@ -1,0 +1,28 @@
+search(searchQuery: string, page?: string, size?: string, sort?: Array<string>): Observable<{ count: number, data: Array<WebSource> }> {
+
+        let queryParameters = new URLSearchParams();
+        let headerParams = this.defaultHeaders;
+
+
+        if (searchQuery !== undefined) {
+            queryParameters.set('searchQuery', String(searchQuery));
+        }
+
+        if (page !== undefined) {
+            queryParameters.set('page', String(page));
+        }
+
+        if (size !== undefined) {
+            queryParameters.set('size', String(size));
+        }
+
+        if (sort !== undefined) {
+            queryParameters.set('sort', String(sort));
+        }
+
+        let options : RequestOptionsArgs = { headers: headerParams, params: queryParameters };
+
+        return this.http.get(this.searchServiceUrl, options)
+            .map(this.mapWebSourceList.bind(this))
+            .catch(this.handleError);
+    }
