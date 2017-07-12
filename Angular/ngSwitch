@@ -1,0 +1,5 @@
+<div [ngSwitch]="getSelectedRow(row)">
+    <md-icon *ngSwitchCase="true" (click)="removeSelectedRow(row)">check_box</md-icon>
+    <md-icon *ngSwitchCase="false" (click)="addSelectedRow(row)">check_box_outline_blank</md-icon>
+    <md-icon *ngSwitchDefault (click)="addSelectedRow(row)">check_box_outline_blank</md-icon>
+</div>
