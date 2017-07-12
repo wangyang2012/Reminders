@@ -5,3 +5,6 @@ sudo passwd user_name
 lsb_release -a
 cat /etc/*-release
 uname -a
+
+# Check listenning ports
+sudo netstat -plnt
