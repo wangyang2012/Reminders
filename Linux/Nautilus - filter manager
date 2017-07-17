@@ -1,0 +1,20 @@
+== FAQ ==
+(nautilus:25179): GLib-GIO-CRITICAL **: g_dbus_interface_skeleton_unexport: assertion 'interface_->priv->connections != NULL' failed
+(nautilus:25179): GLib-GIO-CRITICAL **: g_dbus_interface_skeleton_unexport: assertion 'interface_->priv->connections != NULL' failed
+Could not register the application: Timeout was reached
+(nautilus:25179): Gtk-CRITICAL **: gtk_icon_theme_get_for_screen: assertion 'GDK_IS_SCREEN (screen)' failed
+(nautilus:25179): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+(nautilus:25179): GLib-GObject-CRITICAL **: g_signal_connect_object: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+
+== SOLUTION ==
+
+First thing to try is sudo nautilus in a terminal. If it works, then it may mean that there is something wrong with active nautilus processess for your current user.
+
+To be able to restart nautilus properly, do the following:
+
+See what nautilus processes are running :
+ps aux | grep nautilus
+Kill all nautilus processes you see :
+sudo kill PIDNUMBER
+Restart nautilus :
+nautilus -q
