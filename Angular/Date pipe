@@ -1,0 +1,2 @@
+{{myDate | date: 'dd/MM/yyyy HH:mm:ss'}}
+{{myDate | date: 'shortDate'}}
