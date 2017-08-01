@@ -21,3 +21,7 @@ The output of the code above will be:
 
 Jani,Hege,Stale,Kai Jim,Borge
 Jani,Hege,Lene,Stale,Kai Jim,Borge
+
+
+******* copy array ******
+dest = source.slice();
