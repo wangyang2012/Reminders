@@ -1,0 +1,10 @@
+git log --oneline
+git log --oneline -3 // display the 3 last commits in one-line logs
+git log --since="2013-06-17"
+git log --since="2 weeks ago"
+git log --until="2013-06-17"
+git log --author="Yang"
+git log 737717f..7211543 (from SHA1 to SHA2)
+git log --state
+git log --format=short
+git log --oneline --graph --all --decorate
