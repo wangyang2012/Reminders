@@ -1,8 +1,17 @@
+Variables
+
+<c:set var="page" value="page-name"/>
+<c:out value="${header['user-agent']}" default="Inconnu"/>
+
+
 Contrôl IF
 
 // boolean
+<c:if test = "${page == 'accueil'}">ACCUEIL</c:if>
+<c:if test="${empty param['page']}">
+	Le paramètre page est absent !
+</c:if>
 <s:if test="%{!isLocked}"></s:if>
-
 
 // empty String
 <s:if test="#foo==null || #foo==''">0</s:if>
