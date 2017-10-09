@@ -18,3 +18,26 @@ onChange() {
         console.log('prev value: ', this._interval); // this._interval is defined as member of class
         console.log('got name: ', interval); // interval is the parameter of this function
     }
+
+
+'''' Example ''''
+
+    _interval: string;
+
+    @Output()
+    intervalChange = new EventEmitter();
+
+    @Input()
+    set interval(interval: string) {
+        console.log('prev value: ', this._interval);
+        console.log('got name: ', interval);
+
+        if (this._interval && this._interval.length > 0 && this._interval.match("^[1-9]+[0-9]?['m','h','d','w','M','y']$")) {
+            this.intervalNumber = Number(this._interval.substring(0, this._interval.length -1));
+            this.intervalName = this._interval.substring(this._interval.length - 1);
+        }
+
+        this._interval = interval;
+    }
+
+    <my-interval [(interval)]="myInterval"></my-interval>
