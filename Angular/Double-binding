@@ -11,3 +11,10 @@ xChange: EventEmitter();
 onChange() {
   this.xChange.emit(this.x);
 }
+
+
+    @Input()
+    set interval(interval: string) {
+        console.log('prev value: ', this._interval); // this._interval is defined as member of class
+        console.log('got name: ', interval); // interval is the parameter of this function
+    }
