@@ -42,10 +42,13 @@ http://www.expreg.com/symbole.php
 
 3. Examples
 	3.1 Date format (dd/MM/yyyy)
-	
+		// Java
 		if (!dateStr.matches("^(0?\\d|[12]\\d|3[01])/(0?\\d|1[012])/(\\d{4})$")) {
 			return false;
 		}
+		
+		// Javascript
+		date.match(/^(0?\d|[12]\d|3[01])\/(0?\d|1[012])\/(\d{4})$/)
 
         3.2 Number format(#,##)
         txt.match(/^[0-9]+\,[0-9]{0,2}$/)
