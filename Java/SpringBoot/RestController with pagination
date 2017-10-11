@@ -1,0 +1,23 @@
+The next question in the pagination design in the context of REST is where to include the paging information:
+
+in the URI path: /foo/page/1
+the URI query: /foo?page=1
+
+
+
+
+@RequestMapping( value = "admin/foo",params = { "page", "size" }, method = GET )
+@ResponseBody
+public List< Foo > findPaginated(
+ @RequestParam( "page" ) int page, @RequestParam( "size" ) int size,
+ UriComponentsBuilder uriBuilder, HttpServletResponse response ){
+ 
+   Page< Foo > resultPage = service.findPaginated( page, size );
+   if( page > resultPage.getTotalPages() ) {
+      throw new ResourceNotFoundException();
+   }
+   eventPublisher.publishEvent( new PaginatedResultsRetrievedEvent< Foo >
+    ( Foo.class, uriBuilder, response, page, resultPage.getTotalPages(), size ) );
+ 
+   return resultPage.getContent();
+}
