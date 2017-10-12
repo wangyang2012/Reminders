@@ -1,0 +1,16 @@
+/************ redirect page ************/
+
+window.location.replace("http://stackoverflow.com"); // similar behavior as an HTTP redirect
+window.location.href = "http://stackoverflow.com"; // similar behavior as clicking on a link
+
+
+/************ get URL parameter ************/
+function getUrlVariable( name, url ) {
+    if (!url) url = location.href;
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( url );
+    return results == null ? null : results[1];
+}
+var id = getUrlVariable('id', window.location.href);
