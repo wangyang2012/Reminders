@@ -1,0 +1,16 @@
+*********** check opening ports ***************
+netstat -anp
+
+*********** check TCP ports ***************
+lsof -i TCP
+netstat -vatn
+
+*********** check UDP ports ***************
+netstat -vaun
+
+
+*********** NETSTAT ************************
+-n, --numeric       don't resolve service names
+-l, --listening     display listening sockets
+-t, --tcp           display only TCP sockets
+-u, --udp           display only UDP sockets
