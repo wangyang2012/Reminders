@@ -1,0 +1,19 @@
+************ check CPU model **************
+lscpu
+more /proc/cpuinfo
+
+************ check Linux distribution **************
+lsb_release -a
+ls /etc | grep release ==> to check /etc/xxx-release file
+
+************ check kernal info **************
+uname -a
+uname -mrs
+
+************ check GPU **************
+lspci -v | less
+
+************ check Memory **************
+free -m
+less /proc/meminfo
+top
