@@ -1,0 +1,7 @@
+*************** LEFT JOIN *****************
+SELECT * FROM a LEFT JOIN b ON a.id=b.a_id;
+// keep a complete, b join to a, the a lines without b will be appeared
+
+
+SELECT * FROM a JOIN b ON a.id=b.a_id;
+// the a lines without b will not be appeared
