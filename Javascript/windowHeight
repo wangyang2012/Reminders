@@ -1,3 +1,5 @@
+$(window).height();
+
 window.innerHeight
 window.innerWidth
 
