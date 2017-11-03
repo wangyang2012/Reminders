@@ -1,0 +1,27 @@
+https://hellokoding.com/jpa-one-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
+
+
+
+@OneToMany(mappedBy = "bookCategory", cascade = CascadeType.ALL)
+ 
+ 
+@ManyToOne
+@JoinColumn(name = "book_category_id")
+
+@Entity
+public class Book{
+    private int id;
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "book_category_id")
+    private BookCategory bookCategory;
+}
+
+@Entity
+@Table(name = "book_category")
+public class BookCategory {
+    private int id;
+    private String name;
+    @OneToMany(mappedBy = "bookCategory", cascade = CascadeType.ALL)
+    private Set<Book> books;
+}
