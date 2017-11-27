@@ -1,0 +1,13 @@
+/****** Affichage des git diff ******/
+add [diff] bloc in the file:  ~/.gitconfig
+
+[diff]
+        # Use better, descriptive initials (c, i, w) instead of a/b.
+        mnemonicPrefix = true
+        # Show renames/moves as such
+        renames = true
+        # When using --word-diff, assume --word-diff-regex=.
+        wordRegex = .
+        # Display submodule-related information (commit listings)
+        submodule = log
+
