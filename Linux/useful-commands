@@ -1,0 +1,3 @@
+mkdir -p /complete/path
+ls -larth
+chown -R ywang:ywang folder
