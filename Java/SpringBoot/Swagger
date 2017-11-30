@@ -199,3 +199,20 @@ public class SwaggerConfiguration {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(searchResponseVM, "/api/otm-users");
         return new ResponseEntity<>(searchResponseVM, headers, PaginationUtil.getStatusCodeWithPageable(searchResponseVM));
     }
+
+
+5. Observe Swagger:
+
+http://localhost:8080/v2/api-docs
+http://localhost:8080/swagger-ui.html
+
+
+6. Introduce to Angular
+
+6.1 Add dependence in package.json
+
+"api-update": "java -jar tools/swagger-codegen-cli-2.2.3.jar generate -l typescript-angular2 -i http://localhost:8080/v2/api-docs -o src/app/components/streams-admin/core",
+
+6.2 Launch Api-update
+
+yarn api-update
