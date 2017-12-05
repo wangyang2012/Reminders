@@ -21,3 +21,6 @@ public List< Foo > findPaginated(
  
    return resultPage.getContent();
 }
+
+
+To create a Pageable: new PageRequest(pageNumber, pageSize);
