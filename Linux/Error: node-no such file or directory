@@ -1,0 +1,6 @@
+sudo npm install http-server -g
+http-server
+ !!!!!! "node": no such file or directory
+ 
+FIX:
+sudo ln -s /usr/bin/nodejs /usr/bin/node
