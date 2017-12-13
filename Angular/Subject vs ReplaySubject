@@ -1,5 +1,7 @@
 private onWorkspaceChange: ReplaySubject<Workspace> = new ReplaySubject();
-this.onWorkspaceChange.next();
+this.onWorkspaceChange.next(null);
+
+
 
 
     public collectionSubject = new BehaviorSubject(new CollectionDocumentStoreObject(-1, ""));
