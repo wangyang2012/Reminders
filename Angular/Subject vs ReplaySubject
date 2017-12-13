@@ -1,0 +1,9 @@
+private onWorkspaceChange: ReplaySubject<Workspace> = new ReplaySubject();
+this.onWorkspaceChange.next();
+
+
+    public collectionSubject = new BehaviorSubject(new CollectionDocumentStoreObject(-1, ""));
+
+    public updateFavoriteCollection(idCollection, idDocument) {
+        this.collectionSubject.next(new CollectionDocumentStoreObject(idCollection, idDocument));
+    }
