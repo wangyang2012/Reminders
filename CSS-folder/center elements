@@ -6,3 +6,17 @@
         display: inline-block;
     }
 }
+
+
+
+
+
+#wrapper {
+  text-align: center;
+}
+#toCenter {
+  display: inline-block;
+}
+<div id="wrapper">    
+    <div id="toCenter">Your text</div>
+</div>
