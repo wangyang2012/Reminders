@@ -1,10 +1,13 @@
 https://hellokoding.com/jpa-one-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
 
 
-
+*********** In the Parent class ******************
 @OneToMany(mappedBy = "bookCategory", cascade = CascadeType.ALL)
+
+@OneToMany(mappedBy = "bookCategory", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
  
  
+*********** In the Child class ******************
 @ManyToOne
 @JoinColumn(name = "book_category_id")
 
