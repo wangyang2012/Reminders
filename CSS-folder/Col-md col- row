@@ -1,0 +1,4 @@
+col-md-X est toujours dans un conteneur (display:block) de class row
+Si non, utiliser col-X pour indiquer la taille
+
+jamais row et col-md-12 en même temps
