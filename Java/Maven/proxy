@@ -1,0 +1,11 @@
+create a new file in <home>/.m2/settings.xml
+
+<settings>
+  <proxies>
+    <proxy>
+      <protocol>http</protocol>
+      <host>PROXY_HOST</host>
+      <port>PORT</port>
+    </proxy>
+  </proxies>
+</settings>
