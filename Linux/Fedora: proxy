@@ -1,0 +1,12 @@
+vi ~/.bash_profile 
+http_proxy="http://firewall.ina.fr:81/"
+export http_proxy
+
+https_proxy="http://firewall.ina.fr:81/"
+export http_proxy
+
+ftp_proxy="ftp://yum-user:qwerty@mycache.mydomain.com:3128/"
+export ftp_proxy
+
+/etc/yum.conf (create new if not exist)
+proxy=http://firewall.ina.fr:81/ (the "/" at the end is important)
