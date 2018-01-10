@@ -10,3 +10,22 @@ export ftp_proxy
 
 /etc/yum.conf (create new if not exist)
 proxy=http://firewall.ina.fr:81/ (the "/" at the end is important)
+
+
+
+
+
+
+vi /etc/profile.d/proxy.sh
+加入以下内容
+export HTTP_PROXY="http://username:password@192.168.1.1:808/"
+export FTP_PROXY="http://username:password@192.168.1.1:808/"
+export no_proxy=127.0.0.1,192.168.,localhost
+use_proxy=on
+保存(新建)退出
+chmod +x /etc/profile.d/proxy.sh
+用户名，密码没有可以省略
+vi /etc/yum.conf
+加入
+proxy=http://username:password@192.168.1.1:808/
+重启电脑就使用代理上网了 
