@@ -3,7 +3,11 @@ sudo su
 yum install docker
 systemctl start docker  //start docker service
 systemctl enable docker // enable docker service at startup
-docker run hello-world
+
+// add user to docker group
+sudo groupadd docker && sudo gpasswd -a ${USER} docker && sudo systemctl restart docker
+newgrp docker
+
 
 **************** Ubuntu *********************
 sudo apt-get remove docker docker-engine docker.io
