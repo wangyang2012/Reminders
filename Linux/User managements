@@ -1,0 +1,11 @@
+// create user
+sudo adduser
+
+// create group
+sudo groupadd docker
+
+// add user to a group
+sudo gpasswd -a ${USER} docker
+
+// show groups of user
+groups
