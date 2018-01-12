@@ -1,4 +1,6 @@
 vi ~/.bash_profile 
+vi ~/.bashrc 
+
 http_proxy="http://firewall.ina.fr:81/"
 export http_proxy
 
