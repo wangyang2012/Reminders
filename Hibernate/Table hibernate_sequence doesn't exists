@@ -1,0 +1,1 @@
+change @GeneratedValue(strategy = GenerationType.AUTO) on @GeneratedValue(strategy = GenerationType.IDENTITY)
