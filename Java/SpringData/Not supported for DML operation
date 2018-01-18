@@ -1,0 +1,5 @@
+add @Modifying
+
+    @Modifying
+    @Query("update TeClient set observations = :observations where id=:idClient")
+    void updateObservations(@Param("idClient") Integer idClient, @Param("observations") String observations);
