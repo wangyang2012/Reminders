@@ -1,0 +1,8 @@
+window.open("https://www.w3schools.com"); // open in new tab
+window.open('http://www.google.com', '_blank', 'width=800,height=600'); // opoen in new window
+
+// var windowObjectReference = window.open(strUrl, strWindowName[, strWindowFeatures]);
+
+/*If you specify the width and height when you call window.open, most browsers will open the link in a new window rather than a tab.*/
+// https://developer.mozilla.org/fr/docs/Web/API/Window/open
+	
