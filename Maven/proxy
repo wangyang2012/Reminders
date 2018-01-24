@@ -15,3 +15,12 @@ make file ~/.m2/settings.xml
     </proxy>
   </proxies>
 </settings>
+
+
+Sous WINDOWS
+
+Global settings: 
+C:\tools\apache-maven-3.3.9\conf\settings.xml
+
+User settings: 
+C:\Users\ywang\.m2\settings.xml
