@@ -1,0 +1,15 @@
+/****** Création TAG ******/
+git tag -a v1.0.0 -m "message"
+
+/****** Visualisation TAG ******/
+git tag
+
+/****** Push TAG ******/
+git push origin <tag_name>
+git push --tags
+
+/****** Delete TAG ******/
+git tag -d v1.0.0
+
+git push origin :refs/tags/12345 # delete remote tag '12345' (eg, GitHub version too)
+git push --delete origin tagName # delete remote tag '12345' (eg, GitHub version too)
