@@ -1,0 +1,1 @@
+git --amend -m "my new message"
