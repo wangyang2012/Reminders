@@ -1,0 +1,3 @@
+SELECT * FROM example_fulltext WHERE match (titre, texte) against ('Ch*sec*of*The' IN BOOLEAN MODE);
+
+http://omiossec.developpez.com/mysql/fulltext/
