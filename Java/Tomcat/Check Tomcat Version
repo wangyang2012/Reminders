@@ -1,0 +1,3 @@
+in {TOMCAT_HOME}/bin folder
+
+java -cp catalina.jar org.apache.catalina.util.ServerInfo
