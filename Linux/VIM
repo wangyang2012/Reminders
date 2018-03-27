@@ -2,3 +2,10 @@ End of line => A
 Beginning of lien => 0
 End of file => G
 Beginning of file => gg
+
+yy or Y to copy the line 
+dd to delete (cutting) the line
+p to paste the copied or deleted text after the current line  
+P to paste the copied or deleted text before the current line
+
+shift+V => select block
