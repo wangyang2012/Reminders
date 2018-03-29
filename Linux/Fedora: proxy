@@ -13,8 +13,11 @@ export ftp_proxy
 /etc/yum.conf (create new if not exist)
 proxy=http://firewall.ina.fr:81/ (the "/" at the end is important)
 
+/etc/dnf/dnf.conf
+proxy=http://firewall.ina.fr:81/
 
-
+vi .curlrc
+proxy=firewall.ina.fr:81
 
 
 
