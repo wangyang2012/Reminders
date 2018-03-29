@@ -1,0 +1,3 @@
+su -
+dnf clean all
+dnf upgrade --refresh
