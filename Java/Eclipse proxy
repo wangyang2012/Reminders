@@ -1,0 +1,4 @@
+https://www.mkyong.com/web-development/how-to-configure-proxy-settings-in-eclipse/
+
+window -> preferences -> network connections 
+-> choose "Manual" for "Active Provider" and set HTTP proxy and HTTPS proxy and let SOCKS empty
