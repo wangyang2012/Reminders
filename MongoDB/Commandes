@@ -1,0 +1,66 @@
+show dbs;
+
+/****** Création BDD ******/
+use db_test;
+db.db_test.insert({OBJECT_JSON}); //Il faut insérer quelques choses pour créer la nouvelle dbb
+
+/****** Check current BDD ******/
+db
+
+/****** Suppression BDD ******/
+db.dropDatabase();
+
+/****** Collections ******/
+db.createCollection("runoob")
+db.createCollection("mycol", { capped : true, autoIndexId : true, size : 6142800, max : 10000 } ) // with options
+db.mycol2.insert({"name" : "菜鸟教程"}) // don't need to create collecitons manually, MongoDB create it automatically
+show collections
+db.mycol2.drop()
+
+
+/****** Documents ******/
+db.COLLECTION_NAME.insert(document)
+db.COLLECTION_NAME.find()
+db.COLLECTION_NAME.find().pretty()
+
+db.COLLECTION_NAME.update({'title':'MongoDB'},{$set:{'title':'MongoDB222'}})
+db.COLLECTION_NAME.update({'title':'MongoDB222'},{$set:{'title':'MongoDB'}},{multi:true}) // update with options
+
+db.COLLECTION_NAME.remove({'title':'MongoDB222'})
+
+/****** Find ******/
+db.col.find({key1:value1, key2:value2}).pretty()
+db.col.find(
+   {
+      $or: [
+         {key1: value1}, {key2:value2}
+      ]
+   }
+).pretty()
+
+db.collection.find(query, {title: 1, type: 1}) // inclusion mode, display only title and type columns
+db.collection.find(query, {title: 0, type: 0}) // exclusion mode, don't display title and type columns
+
+/****** Operations ******/
+db.col.find({"likes" : {$gt : 100}})  // Select * from col where likes > 100;
+db.col.find({likes : {$gte : 100}})   // Select * from col where likes >=100;
+db.col.find({likes : {$lt : 150}})    // Select * from col where likes < 150;
+db.col.find({likes : {$lte : 150}})   // Select * from col where likes <= 150;
+db.col.find({likes : {$lt :200, $gt : 100}})    // Select * from col where likes>100 AND  likes<200;
+db.COLLECTION_NAME.find().limit(NUMBER)   // select top NUMBER rows
+
+/****** Sort ******/
+db.col.find({},{"title":1,_id:0}).sort({"likes":-1})  // SORT
+db.COLLECTION_NAME.find().sort({KEY:1})
+
+/****** Aggregation ******/
+db.COLLECTION_NAME.aggregate(AGGREGATE_OPERATION)     // Select count(*) from col GROUP BY xx;
+db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$sum : 1}}}])    // select by_user, count(*) from mycol group by by_user
+
+/****** Dump && restore ******/
+mongodump -h dbhost -d dbname -o dbdirectory
+mongorestore -h <hostname><:port> -d dbname <path>
+
+/****** Monitoring ******/
+mongostat   // outside of mongo shell
+mongotop
