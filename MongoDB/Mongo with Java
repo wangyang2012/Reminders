@@ -6,7 +6,6 @@ public class MongoDBJDBC{
       try{   
       // Create Mongo client
       MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
-         
        
       // Connect to mongo database
       MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol");  
