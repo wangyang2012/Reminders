@@ -1,0 +1,51 @@
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+
+public class MongoDBJDBC{
+   public static void main( String args[] ){
+      try{   
+      // Create Mongo client
+      MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+         
+       
+      // Connect to mongo database
+      MongoDatabase mongoDatabase = mongoClient.getDatabase("mycol");  
+      System.out.println("Connect to database successfully");
+      
+      // Create collection
+      mongoDatabase.createCollection("test");
+      System.out.println("Collection created successful");
+      
+      // Select collection
+      MongoCollection<Document> collection = mongoDatabase.getCollection("test");
+      System.out.println("Select collection test successful");
+       
+      // Insert document
+      Document document = new Document("title", "MongoDB").  
+         append("description", "database").  
+         append("likes", 100).  
+         append("by", "Fly");  
+         List<Document> documents = new ArrayList<Document>();  
+         documents.add(document);  
+         collection.insertMany(documents);  
+         System.out.println("Document created successful");  
+
+      // Find all documents
+      FindIterable<Document> findIterable = collection.find();  
+      MongoCursor<Document> mongoCursor = findIterable.iterator();  
+      while(mongoCursor.hasNext()){  
+        System.out.println(mongoCursor.next());  
+      }
+      
+      // Update documents
+      collection.updateMany(Filters.eq("likes", 100), new Document("$set",new Document("likes",200)));
+      
+      // Delete documents
+      collection.deleteOne(Filters.eq("likes", 200));  
+      collection.deleteMany (Filters.eq("likes", 200));
+      
+      }catch(Exception e){
+        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+     }
+   }
+}
