@@ -1,0 +1,4 @@
+    @ManyToOne
+    @JoinColumn(name="cde_mpa_id")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private TsModePaiement modePaiement;
