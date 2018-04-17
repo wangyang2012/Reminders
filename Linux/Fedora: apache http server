@@ -1,0 +1,13 @@
+Apache http server is already included by Fedora distribution, don't need to install it.
+
+1. Put Web folder in /var/www/html
+
+2. Active the service
+    sudo service httpd start
+
+3. To allow clients to read static content on the server, we should set the httpd_read_user_content on
+    sudo setsebool httpd_read_user_content on
+    
+   To check
+    getsebool httpd_read_user_content
+
