@@ -1,0 +1,2 @@
+# https://www.garron.me/en/articles/scp.html
+scp /path/to/source-file user@host:/path/to/destination-folder/
