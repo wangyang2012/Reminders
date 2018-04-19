@@ -1,0 +1,5 @@
+If we install Tomcat via YUM of CentOS, it uses IPv6 by default. To use IPv4:
+- add -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses to JAVA_OPTS of /etc/sysconfig/tomcat
+- add -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses to JAVA_OPTS of /usr/lib/systemd/system/tomcat.service (maybe)
+- add -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses to JAVA_OPTS of TOMCAT/bin/startup.sh (for other distributions)
+- add address="0.0.0.0" for 8080 connector of TOMCAT/conf/server.xml
