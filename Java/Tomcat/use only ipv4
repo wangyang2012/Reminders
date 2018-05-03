@@ -1,0 +1,12 @@
+******** Fedora ********
+create file [TOMCAT_HOME]/bin/setenv.sh and put:
+-Djava.net.preferIPv4Stack=true
+
+******** Cent OS (install Tomcat by yum) ********
+Open /etc/sysconfig/tomcat and put:
+JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses=true "
+
+or try to put this line in [TOMCAT_HOME]/bin/setenv.sh file
+
+******** Other methods to try ********
+set address="0.0.0.0" in the server.xml Entry
