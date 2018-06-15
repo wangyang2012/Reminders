@@ -1,4 +1,35 @@
 ****** Install in fedora ******
-sudo yum install postgresql-server postresql-contrib
-sudo systemctl enable postgresql
-sudo postgresql-setup --initdb --unit postgresql
+sudo su
+yum install postgresql-server postresql-contrib
+systemctl enable postgresql
+postgresql-setup --initdb --unit postgresql
+postgresql-setup initdb
+systemctl start postgresql.service
+systemctl status postgresql.service
+
+// accès
+su - postgres
+psql
+
+// accès from other
+Edit file: /var/lib/pgsql/data/postgresql.conf, change
+  listen_addresses = 'localhost'
+    to 
+  listen_addresses = '*'
+
+Edit file /var/lib/pgsql/data/pg_hba.conf, change
+  host    all             all             127.0.0.1/32            ident
+    to
+  host    all             all             127.0.0.1/32            trust
+
+Restart server
+  sudo systemctl stop postgresql.service 
+  sudo systemctl start postgresql.service
+
+// create user
+CREATE USER davide WITH PASSWORD 'jw8s0F4';
+
+// create database
+CREATE DATABASE safir ENCODING='utf8';
+
+
