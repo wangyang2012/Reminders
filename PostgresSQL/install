@@ -1,0 +1,4 @@
+****** Install in fedora ******
+sudo yum install postgresql-server postresql-contrib
+sudo systemctl enable postgresql
+sudo postgresql-setup --initdb --unit postgresql
