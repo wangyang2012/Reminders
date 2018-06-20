@@ -1,0 +1,15 @@
+svn status
+
+svn up // pull
+svn update // pull
+
+###### commit ######
+svn ci -m "message" file1 file2 file3
+
+###### create tag and branch ######
+svn copy http://xxxxxx/trunk http://xxxxxx/tags/1.0.1 -m "message"
+svn copy http://xxxxxx/trunk http://xxxxxx/branches/1.0.1 -m "message"
+
+###### remove tag and branch ######
+svn rm http://xxxxxx/tags/1.0.1 -m "message"
+svn rm http://xxxxxx/branches/1.0.1 -m "message"
