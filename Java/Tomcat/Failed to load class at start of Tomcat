@@ -1,0 +1,12 @@
+After Maven Update in Eclipse, is possible that Tomcat throws NotFoundClassException for Spring, Struts, JSP standard classes. 
+It's because Eclipse init Build path options when doing Maven Update operation.
+
+right click on the project 
+Build path
+Configure build path
+Deployment Assembly
+Add...
+Java Build path entries
+Maven Dependencies
+
+It should OK
