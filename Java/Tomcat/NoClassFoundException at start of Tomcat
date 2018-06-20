@@ -8,5 +8,11 @@ Deployment Assembly
 Add...
 Java Build path entries
 Maven Dependencies
+It should be OK
 
-It should OK
+
+At the start of Tomcat, if we use external jar libraries, it's necessary to add libraries in Run Configuration of Tomcat.
+In Run Configuration dialog of Tomcat Server
+Go to Classpath tab
+Add External JARs...
+I should be OK
