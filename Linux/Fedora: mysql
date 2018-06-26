@@ -1,0 +1,6 @@
+dnf install community-mysql-server
+systemctl start mysqld.service
+systemctl enable mysqld.service
+systemctl status mysqld.service
+
+mysql --user root
