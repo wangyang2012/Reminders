@@ -11,3 +11,9 @@ Apache http server is already included by Fedora distribution, don't need to ins
    To check
     getsebool httpd_read_user_content
 
+
+If not
+sudo dnf install httpd
+sudo systemctl enable httpd.service
+sudo systemctl start httpd.service
+put your site on /var/www/html/
