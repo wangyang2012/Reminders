@@ -4,3 +4,7 @@ systemctl enable mysqld.service
 systemctl status mysqld.service
 
 mysql --user root
+
+dnf install mysql-workbench-community
+
+if doesn't work, try to setenforce 0
