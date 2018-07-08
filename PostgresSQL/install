@@ -33,3 +33,6 @@ CREATE USER davide WITH PASSWORD 'jw8s0F4';
 CREATE DATABASE safir ENCODING='utf8';
 
 
+************** PgAdmin4 ************************
+https://askubuntu.com/questions/831262/how-to-install-pgadmin-4-in-desktop-mode-on-ubuntu
+
