@@ -1,0 +1,20 @@
+@RequestMapping(value = {"/path", "/path/{id}")
+public String getResource(@PathVariable Optional<String> id) {
+  if (id.isPresent()) {
+    return service.processResource(id.get());
+  } else {
+    return service.processResource();
+  }
+}
+
+
+
+	@GetMapping(value = { "/combo", "/combo/{fluxId}" })
+	public Iterable<TraitementLightCombo> getListForCombobox(@PathVariable Optional<Integer> fluxId) {
+		if (fluxId.isPresent()) {
+			return treatmentService.getTraitementForCombo(fluxId.get());
+		} else {
+			return treatmentService.getTraitementForCombo(null);
+		}
+
+	}
