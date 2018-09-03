@@ -1,0 +1,25 @@
+Crreate environment.env.ts files undre the /src/environments folder
+    export const environment = {
+      production: false,
+      apiUrl: 'http://example.com/api/',
+    };
+    
+Declare environements in .angular-cli.json
+    "environments": {
+        "ywang": "environments/environment.ywang.ts",
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+
+(Optional) add env to ng serve in package.json
+   "scripts": {
+      "ng": "ng",
+      "start": "ng serve --host 0.0.0.0",
+      "start-ywang": "ng serve --host 0.0.0.0 --env=ywang",
+      "build": "ng build --base-href . --no-sourcemap"
+   },
+    
+
+Launch build and starts:
+  npm start (with ng serve --host 0.0.0.0 --env=prod)
+  npm run start-ywang
