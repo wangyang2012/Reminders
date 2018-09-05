@@ -1,0 +1,2 @@
+sudo apt-get install php-curl
+sudo vi /etc/php/7.1/cli/php.ini  => uncomment ;extension=php_curl.ini line
