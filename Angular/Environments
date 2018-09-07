@@ -1,4 +1,4 @@
-Crreate environment.env.ts files undre the /src/environments folder
+Create environment.env.ts files undre the /src/environments folder
     export const environment = {
       production: false,
       apiUrl: 'http://example.com/api/',
