@@ -92,3 +92,51 @@ public Page<GroupeFichierLight> findGroupeFichiersOfSubProject(final CommonFilte
 
 	return groupeFichierJpaRepo.findAll(specGroupeFichier, pageable);
 }
+
+
+
+
+
+@Override
+public Page<TraitementLight> searchTraitements(CommonFilterDto form, Pageable pageable) {
+
+	Specification<TraitementLight> spec = new Specification<TraitementLight>() {
+		@Override
+		public Predicate toPredicate(Root<TraitementLight> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+			Predicate predicate = null;
+
+			// Id Flux
+			Integer fluxId = form.getId();
+			predicate = cb.equal(root.get("fluxId"), fluxId);
+
+			// ID
+			Integer id = (Integer) form.getFilters().get("id");
+			if (id != null && id > 0) {
+				predicate = cb.and(cb.equal(root.get("id"), id));
+			}
+
+			// Nom traitement
+			String nomTraitement = String.valueOf(form.getFilters().get("nom"));
+			if (StringUtils.isNotEmpty(nomTraitement)) {
+				if (predicate == null) {
+					predicate = cb.equal(root.get("trtLibelle"), nomTraitement);
+				} else {
+					predicate = cb.and(predicate, cb.equal(root.get("trtLibelle"), nomTraitement));
+				}
+			}
+
+			// Responsable
+			String responsable = String.valueOf(form.getFilters().get("responsable"));
+			if (StringUtils.isNotEmpty(responsable)) {
+				if (predicate == null) {
+					predicate = cb.or(cb.equal(root.get("trtAgentResp").get("agtNom"), responsable), cb.equal(root.get("trtAgentResp").get("agtPrenom"), responsable));
+				}
+				predicate = cb.and(cb.or(cb.equal(root.get("trtAgentResp").get("agtNom"), responsable), cb.equal(root.get("trtAgentResp").get("agtPrenom"), responsable)));
+			}
+
+			return predicate;
+		}
+	};
+
+	return traitementLightRepo.findAll(spec, pageable);
+}
