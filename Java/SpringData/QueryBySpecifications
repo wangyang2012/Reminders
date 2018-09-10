@@ -1,0 +1,89 @@
+
+	@Override
+	public Page<GroupeFichierLight> findGroupeFichiersOfSubProject(final CommonFilterDto form, Pageable pageable) {
+
+		Specification<GroupeFichierLight> specGroupeFichier = new Specification<GroupeFichierLight>() {
+			@Override
+			public Predicate toPredicate(Root<GroupeFichierLight> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+				Predicate predicate = null;
+
+				// Recherche par Flux ID
+				Integer fluxId = form.getId();
+				List<Integer> gfIdsByFluxId = traitementLightRepo.getGroupeFichierIdsByFluxId(form.getId());
+				if (gfIdsByFluxId == null || gfIdsByFluxId.isEmpty()) {
+					// Si le Flux n'a aucun groupe, on s'arrête
+					if (gfIdsByFluxId == null) {
+						gfIdsByFluxId = new ArrayList<Integer>();
+					}
+					gfIdsByFluxId.add(-1);
+					return root.get("id").in(gfIdsByFluxId);
+				}
+				predicate = root.get("id").in(gfIdsByFluxId);
+
+				// Recherche par Groupe ID
+				Integer groupeFichierId = (Integer) form.getFilters().get("groupeFichierId");
+				if (groupeFichierId != null) {
+					predicate = cb.and(predicate, cb.equal(root.<String>get("id"), groupeFichierId));
+				}
+
+				// Recherche par nom traitement
+				if (form.getFilters().get("nomTraitement") != null) {
+					String nomTraitement = String.valueOf(form.getFilters().get("nomTraitement"));
+					if (StringUtils.isNotEmpty(nomTraitement)) {
+						List<Integer> gfIdsByNomTraitement = jobTraitementJpaRepo.findGroupeFichierIdsByNomTraitement(nomTraitement);
+						if (gfIdsByNomTraitement.isEmpty()) {
+							gfIdsByNomTraitement.add(-1);
+						}
+						predicate = cb.and(predicate, root.get("id").in(gfIdsByNomTraitement));
+					}
+				}
+
+				// Statut traitement
+				String statutTraitement = String.valueOf(form.getFilters().get("statutTraitement"));
+				if (StringUtils.isNotEmpty(statutTraitement)) {
+					predicate = cb.and(predicate, cb.equal(root.<String>get("lastStatutTraitement"), statutTraitement));
+				}
+
+				// Recherche par nom fichier
+				String nomFichier = String.valueOf(form.getFilters().get("fichierNom"));
+				List<Integer> idsGroupeFromFichier = new ArrayList<Integer>();
+				if (StringUtils.isNotEmpty(nomFichier)) {
+					List<Integer> tempIdsGroupeFromFichier = fichierRepo.getGroupeIdByFichierNomExterne(nomFichier);
+					idsGroupeFromFichier.addAll(tempIdsGroupeFromFichier);
+					if (idsGroupeFromFichier.isEmpty()) {
+						idsGroupeFromFichier.add(-1);
+					}
+					predicate = cb.and(predicate, root.get("id").in(idsGroupeFromFichier));
+				}
+
+				// Recherche par date de modification
+				List<Integer> idsGroupeFromDateMaj = new ArrayList<Integer>();
+				boolean filterByDates = false;
+				if (form.getFilters().get("periodeModification") != null) {
+					Integer periodeModification = Integer.valueOf((String) form.getFilters().get("periodeModification"));
+					Date dateToCompare = DateUtils.getDateBefore(periodeModification);
+					List<Integer> jtsByDate = jobTraitementJpaRepo.findByDateMajBetween(dateToCompare, new Date());
+					idsGroupeFromDateMaj.addAll(jtsByDate);
+					filterByDates = true;
+				} else if (form.getFilters().get("rangeModification") != null) {
+					List<String> filterDateModifJobList = (ArrayList<String>) form.getFilters().get("rangeModification");
+					Date min = DateUtils.parse(filterDateModifJobList.get(0));
+					Date max = DateUtils.parse(filterDateModifJobList.get(1));
+					List<Integer> jtsByDate = jobTraitementJpaRepo.findByDateMajBetween(min, max);
+					idsGroupeFromDateMaj.addAll(jtsByDate);
+					filterByDates = true;
+				}
+
+				if (filterByDates) {
+					if (idsGroupeFromDateMaj.isEmpty()) {
+						idsGroupeFromDateMaj.add(-1);
+					}
+					predicate = cb.and(predicate, root.get("id").in(idsGroupeFromDateMaj));
+				}
+
+				return predicate;
+			}
+		};
+
+		return groupeFichierJpaRepo.findAll(specGroupeFichier, pageable);
+	}
