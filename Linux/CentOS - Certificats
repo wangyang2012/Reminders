@@ -1,0 +1,6 @@
+Au niveau du système:
+- Ajouter les certificats dans /etc/pki/ca-trust/source/anchors/
+- Puis lancer la commande update-ca-trust
+
+Une étape en plus pour Java (connexion Ldap par exemple) JVM:
+- Ajouter un lien symbolique depuis /usr/lib/jvm/java-1.8.0/jre/lib/security/cacerts vers /etc/pki/java/cacerts
