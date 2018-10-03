@@ -1,0 +1,4 @@
+# Use of private key
+
+Create a file /etc/ssh/ssh_config.d/NAME.conf
+add line: IdentifyFile ~/.ssh/KEY.pem
