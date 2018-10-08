@@ -1,0 +1,8 @@
+export HTTP_PROXY="http://host:port"
+export HTTPS_PROXY="http://host:port"
+
+
+********** APT GET **********
+sudo su
+vi /etc/apt/apt.conf
+Acquire::http::proxy "http://<user>:<password>@<uri>:<port>/";
