@@ -1,0 +1,2 @@
+// edit wp-config.php
+define('WPLANG', 'fr_FR');
