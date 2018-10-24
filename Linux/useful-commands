@@ -1,3 +1,4 @@
 mkdir -p /complete/path
 ls -larth
 chown -R ywang:ywang folder
+du -sh FOLDER // check folder size
