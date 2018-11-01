@@ -1,0 +1,78 @@
+https://kgaut.net/blog/2016/creer-un-certificat-ssl-autosigne-pour-le-developpement-en-local.html
+
+Dans ce dossier et je commence par créer un fichier texte qui contiendra la phrase de passe (une sorte de mot de passe pour le certificat) qui me sera demandé lors de la génération. Attention : je fais ça car je suis en local, dans un environnement de production, ces éléments doivent être gardés très précieusement et à l'abri des curieux.
+
+Ensuite ouvrez un terminal et lancez la commande suivante qui va générer la clé qui permettra de signer le certificat :
+
+openssl genrsa -des3 -out server.key 1024
+Génération du fichier csr (Cerficat Signing Request)
+
+openssl req -new -key server.key -out server.csr
+Vous devrez renseigner votre passphrase ainsi que différents éléments (pays, nom...) vous pouvez laisser l'ensemble vide.
+
+Maintenant nous allons supprimer la passphrase de la clé afin qu'apache ne nous la demande pas à chaque fois qu'il démarre :
+
+//Création d'un backup
+cp server.key server.key.org
+openssl rsa -in server.key.org -out server.key
+La passphrase vous sera demandée une dernière fois.
+
+Enfin, génération du certificat :
+
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+Et c'est terminé ! Voila ce que devrait maintenant contenir votre dossier certs :
+
+2016-02-03-100056-screenshot.png
+
+Configuration avec Apache 2
+Maintenant il faut modifier votre virtual host, (ici avec apache2) :
+
+Je laisse volontairement l'accès sans https activé. Les chemins sont à adapter en fonction de votre configuration.
+
+<VirtualHost *:80>
+	ServerName monsite.dev
+	ErrorLog /media/vhosts/monsite.com/logs/error.log
+	CustomLog /media/vhosts/monsite.com/logs/access.log common
+	#PHPINIDir /media/vhosts/monsite.com/conf
+	DocumentRoot "/media/vhosts/monsite.com/www/"
+	<directory /media/vhosts/monsite.com/www/>
+		Options -Indexes +FollowSymLinks +MultiViews
+		AllowOverride All
+		Require all granted
+	</Directory>
+</VirtualHost>
+
+
+<virtualhost *:443>
+  ServerName monsite.dev
+  ServerAlias *.monsite.dev
+  DocumentRoot "/media/vhosts/monsite.com/www/"
+  ErrorLog /media/vhosts/monsite.com/logs/error.log
+  CustomLog /media/vhosts/monsite.com/logs/access.log common
+  # Activation du mode SSL
+  SSLEngine On
+  SSLOptions +FakeBasicAuth +ExportCertData +StrictRequire
+
+  SSLCertificateFile "/media/vhosts/monsite.com/certs/server.crt"
+  SSLCertificateKeyFile "/media/vhosts/monsite.com/certs/server.key"
+
+  <directory /media/vhosts/monsite.com/www/>
+    Options -Indexes +FollowSymLinks +MultiViews
+    AllowOverride All
+    Require all granted
+  </Directory>
+</virtualhost>
+Les lignes importantes sont les suivantes :
+
+  SSLEngine On
+  SSLOptions +FakeBasicAuth +ExportCertData +StrictRequire
+
+  SSLCertificateFile "/media/vhosts/monsite.com/certs/server.crt"
+  SSLCertificateKeyFile "/media/vhosts/monsite.com/certs/server.key"
+Pensez à activer le module SLL d'apache 2 :
+
+sudo a2enmod ssl
+sudo a2enmod default-ssl
+
+et enfin relancez apache2 :
+sudo service apache2 restart
