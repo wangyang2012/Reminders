@@ -9,3 +9,6 @@ sudo gpasswd -a ${USER} docker
 
 // show groups of user
 groups
+
+// add user to SUDO list (Ubuntu)
+usermod -aG sudo username
