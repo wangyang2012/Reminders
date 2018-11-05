@@ -1,4 +1,13 @@
 # Use of private key
 
 Create a file /etc/ssh/ssh_config.d/NAME.conf
-add line: IdentifyFile ~/.ssh/KEY.pem
+add line: IdentifyFile ~/.ssh/KEY.pem (Identity or Identify?)
+
+# version OpenSSH_7.7p1
+Create a file ~/.ssh/conf
+add lines:
+  Host xxxxxxxx
+  User xxxx
+  IentityFile ~/.ssh/xxx.pem
+chmod 600 ~/.ssh/conf
+chmod 600 ~/.ssh/xxx.pem
