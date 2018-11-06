@@ -1,0 +1,32 @@
+Error message: 
+PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested
+
+[ERROR] Failed to execute goal org.owasp:dependency-check-maven:2.1.1:check (default) on project ProdFile: Execution default of goal org.owasp:dependency-check-maven:2.1.1:check failed: Plugin org.owasp:dependency-check-maven:2.1.1 or one of its dependencies co
+uld not be resolved: Failed to collect dependencies at org.owasp:dependency-check-maven:jar:2.1.1 -> org.owasp:dependency-check-core:jar:2.1.1: Failed to read artifact descriptor for org.owasp:dependency-check-core:jar:2.1.1: Could not transfer artifact org.owa
+sp:dependency-check-core:pom:2.1.1 from/to central (https://repo.maven.apache.org/maven2): sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path
+to requested target -> [Help 1]
+
+It network settings are good, there are 2 possibilities:
+- The certificate is available
+- The keystore file is not read by maven
+
+
+First solution: download the certificate and import to java
+download the certificate file from target URL (https://repo.maven.apache.org/) and import it to java cacert keystore:
+keytool -import -alias repo.maven.apache.org -keystore "C:\Program Files\Java\jdk1.8.0_161\jre\lib\security\cacerts" -file "D:\maven.cert"
+password is "changeit" by default
+
+To check
+keytool -list -keystore "C:\Program Files\Java\jdk1.8.0_161\jre\lib\security\cacerts" --display repo.maven.apache.org
+password is "changeit" by default
+
+To check all certificates:
+keytool -list -keystore "C:\Program Files\Java\jdk1.8.0_161\jre\lib\security\cacerts" -rfc
+password is "changeit" by default
+
+Restart JVM or PC and rebuild by Maven
+
+Second solution: indicate to maven where the keystore file is
+mvn clean install  -Djavax.net.ssl.trustStore="C:\Program Files\Java\jdk1.8.0_161\jre\lib\security\cacerts"
+or
+mvn --version to check where is JRE and configure JRE to use the right keystore
