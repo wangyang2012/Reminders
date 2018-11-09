@@ -1,0 +1,455 @@
+https://coderanch.com/t/363313/java/Loading-custom-application-config-files
+https://stackoverflow.com/questions/2161054/where-to-place-and-how-to-read-configuration-resource-files-in-servlet-based-app/2161583
+https://blog.csdn.net/liuying1802028915/article/details/78356314
+
+
+/**************** File in classpath (compiled in WAR) ********************************/
+InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("myconfig.xml");
+
+Example: 
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream input = classLoader.getResourceAsStream("foo.properties");
+        // ...
+        Properties properties = new Properties();
+        properties.load(input);
+
+/**************** File in web.xml ***************************************************/
+        public class MyServlet extends HttpServlet {
+            public String readProperty(String key) {
+              return this.getInitParameter(key);
+            }
+        }
+
+
+
+/*************** File in the disk with absolute path *********************************/
+InputStream input = new FileInputStream("/absolute/path/to/foo.properties");
+
+Example:
+            package ina.ProdFile.Servlet;
+
+            import ina.ProdFile.Controller.*;
+            import ina.ProdFile.ProdFileConstantes;
+            import ina.ProdFile.Outils.DesEncrypter;
+            import ina.ProdFile.Outils.Outils;
+            import ina.ProdFile.Outils.ResourcesManager;
+
+            import java.io.File;
+            import java.io.IOException;
+            import java.sql.Connection;
+            import java.sql.DriverManager;
+            /*
+            import javax.crypto.Cipher;
+            import javax.crypto.SecretKey;
+            import javax.crypto.SecretKeyFactory;
+            import javax.crypto.spec.DESedeKeySpec;
+            import javax.xml.bind.DatatypeConverter;
+            import java.security.spec.KeySpec;
+            */
+            import javax.servlet.ServletException;
+            import javax.servlet.http.HttpServlet;
+            import javax.servlet.http.HttpServletRequest;
+            import javax.servlet.http.HttpServletResponse;
+            import org.apache.log4j.Logger;
+
+            public class ProdFileServlet extends HttpServlet implements ProdFileConstantes {
+
+                private static final long serialVersionUID = 1L;
+                private static final String CONTENT_TYPE = "text/html";
+
+                private static final Logger logger = Logger.getLogger(ProdFileServlet.class);
+
+                protected Connection connection;
+
+                private ResourcesManager rm;
+
+                /** Initialiser les variables globales */
+                public void init() throws ServletException {
+
+                    try {
+                        Class.forName("oracle.jdbc.OracleDriver");
+
+                        String configFileAbsolutePath = getPropertiesFileAbsolutePath("configFileName");
+                        rm = new ResourcesManager(configFileAbsolutePath);
+                        String adresseBase = rm.getValue("adresse_base");
+                        String nomBase = rm.getValue("nom_base");
+                        String portBase = rm.getValue("port_base");
+                        String user = rm.getValue("user_base");
+                        String passwd = rm.getValue("passwd_base");
+                        connection = DriverManager.getConnection("jdbc:oracle:thin:@" + adresseBase + ":" + portBase + ":" + nomBase, user, passwd);
+                        findImportDvdPropertieFile();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        String errorStr = "Erreur d'initialisation BDD : ";
+                        errorStr += "Server: " + rm.getValue("nom_base") + ": " + rm.getValue("port_base");
+                        throw new ServletException("Erreur d'initialisation BDD : "    + e.getMessage());
+                    }
+                }
+
+                private String getTomcatAbsolutePath() throws Exception {
+                    // get path of WEB-INF
+                    String webInfPath = this.getServletContext().getRealPath("WEB-INF");
+                    if (webInfPath == null) {
+                        String tempPath = this.getServletContext().getResource("/").getPath();
+                        webInfPath = tempPath + File.separator + "WEB-INF";
+                    }
+
+                    // get path of Tomcat
+                    File webInfFile = new File(webInfPath);
+                    return webInfFile.getParentFile().getParentFile().getParentFile().getAbsolutePath();
+                }
+
+                /**
+                 * Get properties file name from web.xml and return its absolute path
+                 * @param key
+                 * @return
+                 * @throws Exception
+                 */
+                private String getPropertiesFileAbsolutePath(String key) throws Exception {
+                    try {
+                        // get path of Tomcat
+                        String tomcatPath = this.getTomcatAbsolutePath();
+
+                        // get filename from web.xml
+                        String fileName = this.getInitParameter(key);
+                        if (fileName == null || fileName.length() == 0) {
+                            throw new Exception(key + " manquant dans le context du fichier web.xml");
+                        }
+
+                        // return path
+                        return tomcatPath + File.separator + "conf" + File.separator + fileName;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new ServletException("Erreur de charger la configuration : "    + e.getMessage());
+                    }
+                }
+
+
+                /**
+                 * read import-dvd properties file absolute path and stock in Outils
+                 * This file will be read by ImportDvdController
+                 * @throws Exception
+                 */
+                private void findImportDvdPropertieFile() throws Exception {
+                    try {
+                        Outils.importDvdFileAbsolutePath = getPropertiesFileAbsolutePath("importDvdFileName");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new ServletException("Erreur de charger la configuration pour l'import DVD"    + e.getMessage());
+                    }
+                }
+
+
+                /** Traiter la requête HTTP Get */
+                public void doGet(HttpServletRequest request, HttpServletResponse response)
+                        throws ServletException, IOException {
+                    System.out.println(" in ProdFileServlet doGet");
+                    try{
+                    doPost(request, response);
+                    }catch(Exception e){
+                        System.out.println("Exception in ProdFileServlet doGet"+e);
+                        logger.error(e);
+                    }
+                }
+
+                /** Traiter la requête HTTP Post */
+                public void doPost(HttpServletRequest request, HttpServletResponse response)
+                        throws ServletException, IOException {
+                    // action effectuée sur la servlet
+                    String action = "";
+                    ControllerInterface controleur = null;
+                    response.setContentType(CONTENT_TYPE);
+                    try {
+                        // Vérifier que la connexion est toujours ouverte
+                        if (connection == null || connection.isClosed()) {
+                            String adresseBase = rm.getValue("adresse_base");
+                            String nomBase = rm.getValue("nom_base");
+                            String portBase = rm.getValue("port_base");
+                            String user = rm.getValue("user_base");
+                            String passwd = rm.getValue("passwd_base");
+                            connection = DriverManager.getConnection("jdbc:oracle:thin:@" + adresseBase + ":" + portBase + ":" + nomBase, user, passwd);
+                        }
+                        request.setAttribute("version", this.getInitParameter("version"));
+                        action = request.getParameter("action");
+                        System.out.println(Outils.getCurrentDateTimeStamp()
+                                + "+++ Action demandée : " + action
+                                + " Début de traitement");
+
+                        // On va faire un appel systématique au module de check des droits
+                        // pour positionner la session correctement
+                        logger.info("avant CheckDroitAccesController init ");
+                        CheckDroitAccesController checkDroitsAccesController = new CheckDroitAccesController(
+                                connection);
+                        logger.info("apres CheckDroitAccesController init ");
+                        //si connection depuis adaje pas d'une nouvelle authentification
+                        String adajeParam1 = "";
+                        String adajeParam2 = "";        
+
+                        try{
+                            logger.info("avant lecture param request ");
+                            adajeParam1 = (String) request.getParameter("adajeParam1");
+                            adajeParam2 = (String) request.getParameter("adajeParam2");    
+                            logger.info("apres lecture param request");
+
+                        }catch(Exception e){
+
+                            System.out.println("Problème de parsing paramètrage request");
+                            logger.error("Problème de parsing paramètrage request ",e);
+                        }
+
+
+                        if(adajeParam1!=null && adajeParam2!=null){
+                            try{
+
+                                DesEncrypter encrypter = new DesEncrypter();
+                                checkDroitsAccesController.initAccess(encrypter.decrypt(adajeParam1),encrypter.decrypt(adajeParam2), request, response);
+
+                            }catch(Exception e){
+                                logger.error("Problème d'authentification à partir d adaje ",e);
+                            }
+                        }
+
+                        logger.info("avant checkDroitsAccesController checkAcces");
+                        try{
+                            checkDroitsAccesController.checkAcces(-1,request, response);
+                        }catch(Exception e){
+                            logger.error("checkDroitsAccesController checkAcces ",e);
+                        }
+
+                        logger.info("apres checkDroitsAccesController checkAcces");
+
+                        if (action == null) {
+                            // Pas d'action de précisée ? On va aller vérifier le profil de
+                            // l'utilisateur pour l'identifier automatiquement (cookie)
+                            controleur = new CheckDroitAccesController(connection);
+                            // request.getRequestDispatcher(JSP_ACCUEIL).forward(request,
+                            // response);
+                            // return;
+                        } else if (action.equalsIgnoreCase(SAVE_DOSSIER_PROD)) {
+                            // on veut importer une arborescence de dossiers de
+                            // production...
+                            controleur = new SaveDossierProdController(connection);
+                        } else if (action.equalsIgnoreCase(GET_DOSSIER_PROD)) {
+                            // PDF d'un dossier de prod
+                            controleur = new getDossierProdController(connection);
+                        } else if (action.equalsIgnoreCase(GET_DOSSIER_PROD_HAUT)) {
+                            // Bandeau au dessus du PDF
+                            controleur = new GetDossierProdHautController(connection);
+                        } else if (action.equalsIgnoreCase(FILE_NOT_FOUND)) {
+                            // PDF n'existe pas
+                            controleur = new FileNotFoundController();
+                        } else if (action.equalsIgnoreCase(DOWNLOAD_FILE)) {
+                            // Téléchargement de fichier
+                            controleur = new DownloadFileController(connection);
+                        } else if (action.equalsIgnoreCase(GET_BOITE_CONTENT)) {
+                            // Contenu d'une boîte
+                            controleur = new getBoiteContentController(connection);
+                            // } else if
+                            // (action.equalsIgnoreCase(GET_DOSSIER_PROD_BY_NOTICE)) {
+                            // Dossier de prod à partir d'une notice
+                            // controleur = new
+                            // getDossierProdByNoticeController(connection);
+                        } else if (action.equalsIgnoreCase(IMPORT_DVD)) {
+                            // Import
+                            controleur = new ImportDvdController(connection);
+                        } else if (action.equalsIgnoreCase(RESULTAT_IMPORT_DVD)) {
+                            // Import
+                            controleur = new ResultatImportDvdController(connection);
+                        } else if (action.equalsIgnoreCase(ETAT_IMPORT_DVD)) {
+                            // Etat des imports
+                            controleur = new etatImportDvdController(connection);
+                        } else if (action.equalsIgnoreCase(GET_INFOS_DOSSIER_PROD)) {
+                            // Etat des imports
+                            controleur = new getInfosDossierProdController(connection);
+                        } else if (action.equalsIgnoreCase(PAGE_COUNT)) {
+                            // Compteur de pages
+                            // controleur = new PageCountController(connection);
+                            System.err.println("PAGE COUNT : FONCTION DESACTIVEE !!");
+                        } else if (action.equalsIgnoreCase(STATISTIQUE)) {
+                            // Statistiques
+                            controleur = new StatistiqueController(connection);
+                        } else if (action.equalsIgnoreCase(GENERATE_ENVOI)) {
+                            // Statistiques
+                            controleur = new generateEnvoiController(connection);
+                        } else if (action.equalsIgnoreCase(ETAT_ENVOI)) {
+                            // Etat des envois en numérisation
+                            controleur = new etatEnvoiController(connection);
+                        } else if (action.equalsIgnoreCase(GET_BORDEREAU_ENVOI)) {
+                            // Bordereau d'envoi
+                            controleur = new getBordereauEnvoiController(connection);
+                        } else if (action.equalsIgnoreCase(UPLOAD_FILE)) {
+                            // Transfert d'une image à intégrer dans un DP
+                            controleur = new UploadFileController(connection);
+                        } else if (action.equalsIgnoreCase(SCAN_DOCUMENT)) {
+                            // Scan d'un document...
+                            controleur = new ScanDocumentController(connection);
+                        } else if (action.equalsIgnoreCase(CLOTURER_SCAN)) {
+                            // Cloture du scan d'un document...
+                            controleur = new CloturerScanController(connection);
+                        } else if (action.equalsIgnoreCase(UPDATE_INFO_DOSSIER)) {
+                            // Modification d'une information d'un DP
+                            controleur = new UpdateInfoDossierController(connection);
+                        } else if (action.equalsIgnoreCase(LOGIN)) {
+                            // Login utilisateur
+                            controleur = new CheckDroitAccesController(connection);
+                        } else if (action.equalsIgnoreCase(LOGOUT)) {
+                            // Logout utilisateur
+                            controleur = new LogoutController();
+                        } else if (action.equalsIgnoreCase(GESTION_STOCK)) {
+                            // Gestion du stock par les magasiniers
+                            controleur = new GestionStockController(connection);
+                        } else if (action.equalsIgnoreCase(AJOUTER_DDE_NOTICE)) {
+                            // Ajouter une notice / commande à valider ensuite
+                            controleur = new AjouterDemandeNoticeController(connection);
+                        } else if (action.equalsIgnoreCase(TRAITER_PROCHAINE_NOTICE_CDE)) {
+                            // Traitement d'une notice dans le cadre d'une commande : on va
+                            // cocher les DP à monter
+                            controleur = new TraiterProchaineNoticeCdeController(connection);
+                        } else if (action.equalsIgnoreCase(MODIF_DROITS_ACCES)) {
+                            // Modification des droits d'accès d'un utilisateur
+                            controleur = new ModifierDroitsAccesUserController(connection);
+                        } else if (action.equalsIgnoreCase(SUPPRIMER_DOSSIER)) {
+                            // Demande de renumérisation d'un PDF
+                            controleur = new SupprimerDossierController(connection);
+                        } else if (action.equalsIgnoreCase(IMPORT_NOTICES)) {
+                            // Import de notices issues de folio totem
+                            controleur = new ImportNoticesController(connection);
+                        } else if (action.equalsIgnoreCase(IMPORT_RECHERCHES)) {
+                            // Recherche parmis les imports totem pour insertion
+                            controleur = new ImportRecherchesController(connection);
+                        } else if (action.equalsIgnoreCase(MODIFY_DOSSIER_PROD)) {
+                            // Modification detail dossier prod
+                            controleur = new ModifyDossierProdController(connection);
+                        } else if (action.equalsIgnoreCase(MAJ_PRESENCE_DOSSIER_PROD)) {
+                            // Mettre à jour info présence du dossier prod
+                            controleur = new UpdateInfoPresenceDossierController(connection);
+                        } else if (action.equalsIgnoreCase(MAJ_PRESENCE_DOSSIER_PROD_EN_MASSE)) {
+                            // Mettre à jour info présence du dossier prod en masse
+                            controleur = new UpdateInfoPresenceDossierEnMasseController(connection);
+                        } else if (action.equalsIgnoreCase(PRINTZEBRA)) {
+                            // Modification detail dossier prod
+                            controleur = new PrintingZebraController(connection, rm);
+                            // } else if (action.equalsIgnoreCase(
+                            // GET_DOSSIER_PROD_BY_CRITERIA )) {
+                            // dossier par date
+                            // controleur = new getDossierProdByCriteria(connection);
+                        } else if (action.equalsIgnoreCase(DELETE_DOSSIER_PROD)) {
+                            // dossier par date
+                            controleur = new DeleteDossierProdController(connection);
+                        } else if (action.equalsIgnoreCase(SEARCH)) {
+                            // dossier par date
+                            controleur = new SearchController(connection, rm);
+                        } else if (action.equalsIgnoreCase(IMPORT_PDF)) {
+                            // import PDF
+                            controleur = new ImportPDF(connection, rm);
+                        } else if (action.equalsIgnoreCase(RATTACHEMENT_PDF)) {
+                            // import PDF
+                            controleur = new RattachementPDF(connection, rm);
+                        }else if (action.equalsIgnoreCase(DOWNLOAD_PDF)) {
+                            // import PDF
+                            controleur = new DownloadPDF(connection, rm);
+                        }else if (action.equalsIgnoreCase(PLUS_DE_PDF)) {
+                            // import PDF
+                            controleur = new AffichagePDFHistorique(connection, rm);
+                        }else if (action.equalsIgnoreCase(EXPORT_XSL)) {
+                            // import PDF
+                            controleur = new ExportXSL(connection, rm);
+                        }
+                        else {
+                            response.sendError(0, "Action inconnue : " + action);
+                            System.err.println("Action inconnue : " + action);
+                        }
+
+                        if (controleur != null) {
+                            // on sous-traite le travail au contrôleur
+                            controleur.execute(request, response);
+                        }
+                        System.out
+                                .println(Outils.getCurrentDateTimeStamp()
+                                        + "+++ Action demandée : " + action
+                                        + " TRAITEMENT TERMINE");
+
+                    } catch (Exception e) {
+                        // logger l'erreur ??
+                        logger.error("Error",e);
+                        request.setAttribute("error", e);
+                        throw new ServletException("erreur doPost servlet frontale", e);
+                    }
+                }
+
+                /**
+                 * 
+                 * @param adajeParam1
+                 * @return
+                 */
+                /*
+                 private KeySpec ks;
+                 private SecretKeyFactory skf;
+                 private Cipher cipher;
+                 private SecretKey key;
+                 private String myEncryptionKey = "4A144BEBF7E5E7B7DCF26491AE79C54C768C514CF1547D23";
+                 private String decrypt(String encryptedString) {
+
+                    String decryptedText = null;
+                    try {
+                        logger.info("decrypt String début ::"+encryptedString);
+
+                        ks = new DESedeKeySpec(myEncryptionKey.getBytes("UTF8"));            
+                        logger.info("decrypt String  ks");
+                        skf = SecretKeyFactory.getInstance("DESede");
+                        logger.info("decrypt String  skf");
+                        cipher = Cipher.getInstance("DESede");
+                        logger.info("decrypt String  cipher");
+                        key = skf.generateSecret(ks);
+                        logger.info("decrypt generate ks");
+                        cipher.init(Cipher.DECRYPT_MODE, key);
+                        logger.info("decrypt String  int cipher");
+
+                        byte[] encryptedText = DatatypeConverter.parseBase64Binary(encryptedString);
+                        logger.info("decrypt String  encryptedText");
+                        byte[] plainText = cipher.doFinal(encryptedText);
+                        logger.info("decrypt String  plainText");
+                        decryptedText = new String(plainText);    
+
+                        logger.info("decrypt String fin");
+
+                    }catch(IllegalArgumentException e){
+                        logger.error("decrypt String  IllegalArgumentException ",e);
+
+                    }catch (Exception e) {
+                        logger.error("decrypt String  ",e);
+                            logger.error("Error",e);
+                    }
+
+
+
+                    return decryptedText;
+
+                }
+                */
+
+                /** Traiter la requête HTTP Put */
+                public void doPut(HttpServletRequest request, HttpServletResponse response)
+                        throws ServletException, IOException {
+                    // action effectuée sur la servlet
+                    String action = "";
+                    try {
+                        action = request.getParameter("action");
+                        System.out.println(action);
+                    } catch (Exception e) {
+                        logger.error("Error",e);
+                    }
+                }
+
+                /** Nettoyer les ressources */
+                public void destroy() {
+                    try {
+                        connection.close();
+                    } catch (Exception e) {} 
+                    // c'est pas grave si on n'arrive pas à refermer la connexion à la
+                    // base de données...
+                }
+
+            }
+
+
