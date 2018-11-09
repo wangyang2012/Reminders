@@ -1,0 +1,19 @@
+/********************************* OLD version (java.io) *********************************/
+
+InputStream is = this.getClass().getClassLoader().getResourceAsStream(filename);
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, encoding));
+            if (is != null) {
+                String str;
+                while ((str = reader.readLine()) != null) {
+                    System.out.println(str);
+                }
+            }
+        } finally {
+            try { is.close(); } catch (Throwable ignore) {}
+        }
+        
+        
+        
+/********************************* OLD version (java.nio) *********************************/
