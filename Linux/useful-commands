@@ -2,3 +2,10 @@ mkdir -p /complete/path
 ls -larth
 chown -R ywang:ywang folder
 du -sh FOLDER // check folder size
+
+
+tcpdump -i any port 1521 or port 636 and host www.google.fr -A -s0
+-s0 don't truncate display
+-A display on terminal
+-w write in a file like file.pcap (readable by Wireshark)
+-i interface (eth0, any, ...)
