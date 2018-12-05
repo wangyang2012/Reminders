@@ -1,0 +1,51 @@
+http://tutorials.jenkov.com/java-concurrency/creating-and-starting-threads.html#java-class-implements-runnable
+
+/******************** Create a new simple Thread ******************************/
+Thread th = new Thread();
+th.start();
+
+OR
+
+  Thread thread = new Thread(){
+    public void run(){
+      System.out.println("Thread Running");
+    }
+  }
+  thread.start();
+
+/******************** Custom Thread ******************************/
+  public class MyThread extends Thread {
+    public void run(){
+       System.out.println("MyThread running");
+    }
+  }
+  
+  MyThread myThread = new MyThread();
+  myTread.start();
+  
+/******************** Runnable ***************************************/
+  public class MyRunnable implements Runnable {
+    public void run(){
+       System.out.println("MyRunnable running");
+    }
+  }
+  
+  OR
+  
+  Runnable runnable =
+        () -> { System.out.println("Lambda Runnable running"); };
+        
+  OR
+  
+  Runnable myRunnable =
+    new Runnable(){
+        public void run(){
+            System.out.println("Runnable running");
+        }
+    }
+  
+  THEN
+  
+Thread thread = new Thread(runnable);
+thread.start();
+
