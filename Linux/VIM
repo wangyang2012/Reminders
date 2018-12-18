@@ -9,3 +9,5 @@ p to paste the copied or deleted text after the current line
 P to paste the copied or deleted text before the current line
 
 shift+V => select block
+
+show line number => :set nu OR :set number OR echo "set nubmer" > ~/.vimrc
