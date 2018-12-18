@@ -1,0 +1,8 @@
+sudo apt install virtualbox
+https://github.com/kubernetes/minikube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
+  && sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+minikube start --help
+minikube start --memory 4096 
+
