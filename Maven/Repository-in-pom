@@ -1,0 +1,8 @@
+<project>
+  <repositories>
+	    <repository>
+	      <id>whatever-id</id>
+	      <url>https://SERVER/repository/maven-snapshots/</url>
+	    </repository>
+	</repositories>
+</project>
