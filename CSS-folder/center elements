@@ -20,3 +20,11 @@
 <div id="wrapper">    
     <div id="toCenter">Your text</div>
 </div>
+
+
+############### VERTICAL CENTER ###############
+.vertical-center {
+    margin: auto; // very important
+    text-align: center;
+}
+    
