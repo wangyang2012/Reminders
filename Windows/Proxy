@@ -1,0 +1,6 @@
+set http_proxy=http://my_proxy:91
+
+************** CURL **********************
+-x proxy_url:proxy_port
+curl -x myproxy:91 http://www.github.com
+
