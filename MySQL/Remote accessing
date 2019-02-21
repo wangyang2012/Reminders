@@ -1,9 +1,3 @@
-
-256
-down vote
-accepted
-To expose MySQL to anything other than localhost you will have to have the following line
-
 For mysql version 5.6 and below
 
 uncommented in /etc/mysql/my.cnf and assigned to your computers IP address and not loopback
@@ -11,6 +5,7 @@ uncommented in /etc/mysql/my.cnf and assigned to your computers IP address and n
 For mysql version 5.7 and above
 
 uncommented in /etc/mysql/mysql.conf.d/mysqld.cnf and assigned to your computers IP address and not loopback
+/etc/mysql/mariadb.conf.d/50-server.cnf
 
 #Replace xxx with your IP Address 
 bind-address        = xxx.xxx.xxx.xxx //server address
