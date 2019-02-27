@@ -13,3 +13,6 @@ svn copy http://xxxxxx/trunk http://xxxxxx/branches/1.0.1 -m "message"
 ###### remove tag and branch ######
 svn rm http://xxxxxx/tags/1.0.1 -m "message"
 svn rm http://xxxxxx/branches/1.0.1 -m "message"
+
+###### clean up locked files ######
+ svn cleanup
