@@ -1,0 +1,8 @@
+Create index
+ALTER TABLE table_name ADD INDEX `index_name` (`col1`, `col2`);
+
+Check engine
+SELECT TABLE_NAME,ENGINE FROM   information_schema.TABLES;
+SHOW VARIABLES LIKE 'have_query_cache'; // query_cache is supported
+SHOW VARIABLES LIKE 'query_cache_size'; // set to 0 to disable query_cache
+SHOW STATUS LIKE 'Qcache%'; 
