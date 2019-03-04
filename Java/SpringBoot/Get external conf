@@ -1,0 +1,2 @@
+Use -Dconf.path=/conf to indicate the path of configuration files in JVM argumetns
+Then, use @Environment or @Value to get this value
