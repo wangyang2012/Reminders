@@ -1,0 +1,5 @@
+
+@PostConstruct // This function will be launched after construction of class so @Autowired objects are already instancied
+public void init(){
+  xxxxService.treatment();
+}
