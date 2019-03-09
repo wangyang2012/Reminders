@@ -4,5 +4,8 @@ sudo fdisk -l
 # unmount USB drive
 sudo umount /dev/sdb1
 
-# write image
+# write image (bs=4M: write 4MB at the same time)
 dd if=./CentOS-7-x86_64-DVD-1810.iso of=/dev/sdb bs=4M
+
+# to show progress
+dd if=/dev/zero of=/dev/null bs=4M status=progress
