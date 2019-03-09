@@ -1,0 +1,8 @@
+# check USB disk number
+sudo fdisk -l
+
+# unmount USB drive
+sudo umount /dev/sdb1
+
+# write image
+dd if=./CentOS-7-x86_64-DVD-1810.iso of=/dev/sdb bs=4M
