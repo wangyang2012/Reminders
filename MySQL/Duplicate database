@@ -1,0 +1,1 @@
+mysqldump old-database | mysql new-database
