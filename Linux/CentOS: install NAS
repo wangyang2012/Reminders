@@ -156,3 +156,27 @@ rpm -ihv epel-release-7-11.noarch.rpm
 yum install htop
 # F2 to enter configuration menu, F10 to save
 
+
+
+############################ Samba ##################################################
+yum install samba samba-client
+vi /etc/samba/smb.conf
+useradd MyUser
+pdbedit -a MyUser # add user to Samba
+pdbedit -L # to check Samba users
+
+smbclient -L //192.168.1.1              # to check if samba service is available
+smbclient -L //192.168.1.1 -U smb
+smbclient -L //192.168.1.1/smb -U smb
+smbclient //192.168.1.1 -U smb          # to use samba at the client side
+
+
+############################ Cockpit ##################################################
+sudo yum install cockpit
+sudo systemctl enable --now cockpit.socket
+sudo firewall-cmd --permanent --zone=public --add-service=cockpit
+sudo firewall-cmd --reload
+# by default Cockpit uses the 9090 port, to change it:
+vi /usr/lib/systemd/system/cockpit.socket
+systemctl daemon-reload
+systemctl restart cockpit.socket
