@@ -178,5 +178,6 @@ sudo firewall-cmd --permanent --zone=public --add-service=cockpit
 sudo firewall-cmd --reload
 # by default Cockpit uses the 9090 port, to change it:
 vi /usr/lib/systemd/system/cockpit.socket
+# for Debian: vi /usr/lib/systemd/system/cockpit.socket.d/listen.conf
 systemctl daemon-reload
 systemctl restart cockpit.socket
