@@ -1,1 +1,8 @@
+https://www.linode.com/docs/tools-reference/tools/find-files-in-linux-using-the-command-line/
+
 find /home/username/ -name "*.err"
+
+find . -type f -exec grep "example" '{}' \; -print
+find . -type f -print | xargs grep "example"
+find . -name "rc.conf" -exec chmod o+r '{}' \;
+
