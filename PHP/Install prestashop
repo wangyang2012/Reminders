@@ -1,0 +1,21 @@
+# install php zip extension:
+sudo apt-get install php-zip
+sudo service apache2 restart
+
+# grant write permission on prestashop folder for php
+chmod 777 prestashop
+
+# enable php-xml module
+apt-get install php-xml
+
+apt-get install php-curl
+apt-get install php-gd
+apt-get install php-mysql
+apt-get install php-intl
+
+# enable rewrite module
+a2enmod rewrite
+
+sudo service apache2 restart
+
+And then: reference to the "MySql remote access" wiki
