@@ -19,3 +19,13 @@ a2enmod rewrite
 sudo service apache2 restart
 
 And then: reference to the "MySql remote access" wiki
+
+# If webservices aren't available, you should activate rewrite in apache
+vi /etc/apache2/conf-available/security.conf
+<Directory /var/www/>
+			Options Indexes FollowSymLinks MultiViews
+			AllowOverride ALL
+			Order allow,deny
+			allow from all
+</Directory>
+service apache2 restart  
