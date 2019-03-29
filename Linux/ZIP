@@ -1,1 +1,5 @@
 zip -r filename.zip files_to_zip
+tar -czvf archive.tar.gz files_to_tar
+
+unzip xxx.zip
+tar -xzvf xxx.tar.gz
