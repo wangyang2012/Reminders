@@ -1,0 +1,3 @@
+server.xml
+
+<Context path="/" docBase="TranslateApi" reloadable="false" />
