@@ -1,0 +1,8 @@
+  id                        # to check information of the current user
+  id OTHERUSER              # to check information of other user
+  
+  groups                    # to check groups of the current user
+  groups OTHERUSER          # to check groups of other user
+  
+  usermod -a -G GROUP USER  # to add USER in the GROUP
+  useradd -G GROUP USER     # to create a new USER in the GROUP
