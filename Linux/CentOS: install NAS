@@ -142,25 +142,20 @@ yum install htop
 # F2 to enter configuration menu, F10 to save
 
 
-
-
-############################ Monitorning ##################################################
-top
-lshw
-lshw -html > index.html
-lscpu
-
-# install htop (https://www.tecmint.com/install-htop-linux-process-monitoring-for-rhel-centos-fedora)
-wget dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
-rpm -ihv epel-release-7-11.noarch.rpm
-yum install htop
-# F2 to enter configuration menu, F10 to save
-
-
-
 ############################ Samba ##################################################
 yum install samba samba-client
 vi /etc/samba/smb.conf
+  [nas]
+        comment = User Files Share
+        path = /nas
+        valid users = smb
+        write list = smb
+        writeable = yes
+        read only = No
+        printable = no
+        create mask = 0774
+        directory mask = 0774
+
 useradd MyUser
 pdbedit -a MyUser # add user to Samba
 pdbedit -L # to check Samba users
