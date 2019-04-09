@@ -164,6 +164,8 @@ smbclient -L //192.168.1.1              # to check if samba service is available
 smbclient -L //192.168.1.1 -U smb
 smbclient -L //192.168.1.1/smb -U smb
 smbclient //192.168.1.1 -U smb          # to use samba at the client side
+systemctl restart smb
+setentforce 0                           # disable linux SE to avoid accessing problems
 
 
 ############################ Cockpit ##################################################
