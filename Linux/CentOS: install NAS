@@ -58,70 +58,10 @@ arp -a
 
 # go to hibernate mode
 systemctl hibernate
+systemctl poweroff
 
-############################# Cient side ###################################################
-yum install wakeonlan
-wakeonlan -i IP_SERVER
-wakeonlan MAC_SERVER (################################ networking #####################################
-# after installing Cent OS, there is no network
-
-# to show network cart
-nmcli d
-# to enter into the network manager GUI
-nmtui
-# enable the disabled network card
-# edit the network card to enable once the system is started
-
-# install network tools netstat, ifconfig
-yum install net-tools
-yum install nc
-
-################################# disk management ################################
-# check disk status
-fdisk -l
-lsblk
-df -h
-# create partition
-fdisk /dev/sdb
-n 	# create partition
-p 	# primary partition
-... 	# use default values for section
-w 	# write changes or q to quit without save
-# note: fdisk using MBR as partition table doesn't support partition larger than 2TB, in this case we can use parted
-parted /dev/sdb2
-mklabel gpt 		# change partition table to use GPT
-mkpart primary 0 -1 	# create only one primary partition
-Ignore			# to ignore warning message
-p			# to print GPT partition table
-quit
-
-# format disk to ext4
-mkfs.ext4 /dev/sdb1
-
-# mount partition
-mount /dev/sdb1 /storage
-
-################################# Wake on lan ###################################
-
-# check if network card supports Wake-on-lan
-ethtool enp3s0 | grep Wake
-
-# it should print: 
-# Supports Wake-on: pumbg
-# Wake-on: d			# d means isupports but it's disabled now
-
-# activate wake-on-lan for this time
-ethtool -s enp3s0 wol g
-
-# activate wake-on-lan for persistence
-sudo echo 'ETHTOOL_OPTS="-s ${DEVICE} wol g"' >> /etc/sysconfig/network-scripts/ifcfg-enp3s0
-
-# check ip address and physical address, note them
-ip addr
-arp -a
-
-# go to hibernate mode
-systemctl hibernate
+# to enable wake on lan from the BIOS
+https://www.asus.com.cn/support/FAQ/1001663/
 
 ############################# Cient side ###################################################
 yum install wakeonlan
