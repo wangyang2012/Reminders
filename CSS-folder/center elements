@@ -1,4 +1,12 @@
+-------------------- method 1 --------------------------
+.to-center {
+    width: 500px
+    margin: 0 auto;
+}
 
+
+
+-------------------- method 2 --------------------------
 #Center a ngb-pagination component
 .pagination-content {
     text-align: center;
@@ -6,9 +14,6 @@
         display: inline-block;
     }
 }
-
-
-
 
 
 #wrapper {
