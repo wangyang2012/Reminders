@@ -1,0 +1,2 @@
+mysql -V
+SHOW VARIABLES LIKE "%version%";
