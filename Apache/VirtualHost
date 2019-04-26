@@ -1,0 +1,38 @@
+1. create folders
+  mkdir /var/www/html/site1
+  mkdir /var/www/html/site2
+  
+2. prepare index.html files
+  echo "site1" > /var/www/html/site1/index.html
+  echo "site2" > /var/www/html/site2/index.html
+ 
+3. create sites folder
+  mkdir /etc/httpd/sites-available
+  mkdir /etc/httpd/sites-enabled
+  
+4. write confs for sites
+  vi /etc/httpd/sites-available/site1.com.conf
+     <VirtualHost *:80>
+        ServerName www.site1.com
+        ServerAlias site1.com
+        DocumentRoot /var/www/html/test1/
+      </VirtualHost>
+
+  vi /etc/httpd/sites-available/site2.com.conf
+     <VirtualHost *:80>
+        ServerName www.site2.com
+        ServerAlias site1.com
+        DocumentRoot /var/www/html/test2/
+      </VirtualHost>
+      
+5. enable sites:
+    ln -s /etc/httpd/sites-available/site1.com.conf /etc/httpd/sites-enabled/site1.com.conf
+    ln -s /etc/httpd/sites-available/site2.com.conf /etc/httpd/sites-enabled/site2.com.conf
+ 
+6. import confs to Apache
+  echo "IncludeOptional sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
+  
+7. restart Apache
+  systemctl restart httpd
+  
+8. modify /etc/hosts to point www.site1.com and www.site2.com to localhost
