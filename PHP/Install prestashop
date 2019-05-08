@@ -29,3 +29,22 @@ vi /etc/apache2/conf-available/security.conf
 			allow from all
 </Directory>
 service apache2 restart  
+
+# create VirtualHost
+vi /etc/apache2/sites-available/www.smeal.fr.conf
+<VirtualHost *:80>
+    ServerName www.smeal.fr
+    #DocumentRoot /var/www/html/smeal
+    DocumentRoot /home/yang/smeal_prod/prestashop_prod
+    <Directory "/home/yang/smeal_prod/prestashop_prod">
+        AllowOverride All
+        Options Indexes FollowSymLinks MultiViews
+        Order allow,deny
+        allow from all
+#       Require all granted
+    </Directory>
+    ErrorLog /var/log/apache2/error.log
+    LogLevel warn
+</VirtualHost>
+
+ln -s /etc/apache2/sites-available/www.smeal.fr.conf /etc/apache2/sites-available/www.smeal.fr
