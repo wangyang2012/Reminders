@@ -47,4 +47,12 @@ vi /etc/apache2/sites-available/www.smeal.fr.conf
     LogLevel warn
 </VirtualHost>
 
+vi /etc/apache2/apache2.conf
+<Directory /home/yang/smeal_prod/prestashop_prod>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+</Directory>
+
+
 ln -s /etc/apache2/sites-available/www.smeal.fr.conf /etc/apache2/sites-available/www.smeal.fr
