@@ -29,7 +29,12 @@
 
 ############### VERTICAL CENTER ###############
 .vertical-center {
-    margin: auto; // very important
+/*    margin: auto; // very important
     text-align: center;
+*/
+  display: flex;
+  align-items: center;
+  justify-content: center; 
 }
     
+
