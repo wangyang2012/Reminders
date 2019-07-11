@@ -1,0 +1,7 @@
+Add public key on the server
+Copy private key file at ~/.ssh/xxxx.pem
+edit ~/.ssh/config file:
+  Host xx.xx.xx.xx
+   HostName xx.xx.xx.xx
+   IdentityFile ~/.ssh/xxxx.pem
+   User xxx
