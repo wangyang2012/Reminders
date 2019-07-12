@@ -5,3 +5,7 @@ edit ~/.ssh/config file:
    HostName xx.xx.xx.xx
    IdentityFile ~/.ssh/xxxx.pem
    User xxx
+   
+   
+ ssh-add -l // to check added ssh key
+ ssh-add // will add all private keys under HOME/.ssh/, make chmod 400 for private key files
