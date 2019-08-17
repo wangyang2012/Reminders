@@ -118,3 +118,6 @@ vi /usr/lib/systemd/system/cockpit.socket
 # for Debian: vi /usr/lib/systemd/system/cockpit.socket.d/listen.conf
 systemctl daemon-reload
 systemctl restart cockpit.socket
+
+UDP 192.168.1.106:554/stream1
+admin:01163445
