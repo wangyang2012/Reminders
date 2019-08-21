@@ -1,0 +1,6 @@
+// Get properties values in classes
+
+	@Autowired
+	private Environment env;
+  
+  return env.getProperty("key.to.read");
