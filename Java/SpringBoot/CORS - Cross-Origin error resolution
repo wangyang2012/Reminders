@@ -1,0 +1,57 @@
+https://www.baeldung.com/spring-cors
+
+/************************************** for a specific method *********************************************/
+@RestController
+@RequestMapping("/account")
+public class AccountController {
+ 
+    @CrossOrigin
+    @RequestMapping("/{id}")
+    public Account retrieve(@PathVariable Long id) {
+        // ...
+    }
+ 
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+    public void remove(@PathVariable Long id) {
+        // ...
+    }
+}
+
+/************************************** for a controller *********************************************/
+@CrossOrigin(origins = "http://example.com", maxAge = 3600)
+@RestController
+@RequestMapping("/account")
+public class AccountController {
+ 
+    @RequestMapping("/{id}")
+    public Account retrieve(@PathVariable Long id) {
+        // ...
+    }
+ 
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+    public void remove(@PathVariable Long id) {
+        // ...
+    }
+}
+
+/************************************** global way *********************************************/
+package fr.ina.neva.acquisition.api.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+/**
+ * The type App config.
+ */
+@Configuration
+@EnableWebMvc
+public class WebConfig extends WebMvcConfigurerAdapter {
+
+	@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**");
+    }
+
+}
