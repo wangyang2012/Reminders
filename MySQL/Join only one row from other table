@@ -1,0 +1,53 @@
+/*************** preparing tables and datas *****************************/
+CREATE TABLE IF NOT EXISTS `table_a` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label_a` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `table_a` (`id`, `label_a`) VALUES
+	(1, 'a1'),
+	(2, 'a2');
+
+CREATE TABLE IF NOT EXISTS `table_b` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(45) DEFAULT NULL,
+  `id_a` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_AB` (`id_a`),
+  CONSTRAINT `FK_AB` FOREIGN KEY (`id_a`) REFERENCES `table_a` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+INSERT INTO `table_b` (`id`, `label`, `id_a`) VALUES
+	(1, 'b1', 1),
+	(2, 'b2', 1),
+	(3, 'b2', 1),
+	(4, 'b4', 2);
+
+
+
+/*************** goal *****************************/
+for every row of table_a, I want to get the biggest id of table_b:
+_______________________
+| id_a | id_b | label |
+|   1  |  3   | 'b2'  |
+|   2  |  4   | 'b4'  |
+-----------------------
+
+/*************** solution 1 : using row number *********************/
+select x.id_a, x.id as id_b, x.label from (Select table_b.*, (Row_Number() Over(Partition By table_b.id_a Order By table_b.id desc)) as row_number From table_b) x where x.row_number=1;
+
+
+/*************** solution 2: using left join ************/
+-- This solution works when the value of label in B has not redundant, but as there is 2 "b2", it doesn't work:
+SELECT s1.*
+FROM table_b as s1
+LEFT JOIN table_b AS s2
+	 ON s1.id_a = s2.id_a AND s1.label < s2.label
+WHERE s2.id_a IS NULL;
+_______________________
+| id_a | id_b | label |
+|   1  |  2   | 'b2'  |
+|   1  |  3   | 'b2'  |
+|   2  |  4   | 'b4'  |
+-----------------------
