@@ -1,0 +1,6 @@
+The final goal would be to see all the files from the most recently modified
+
+ls -t
+or (for reverse, most recent at bottom):
+
+ls -tr
