@@ -1,0 +1,18 @@
+https://spring.io/guides/gs/spring-boot-docker/
+
+/**** Dockerfile ****/
+
+FROM frolvlad/alpine-oraclejdk8:slim
+VOLUME /tmp
+ADD YOUR-APP-NAME.jar app.jar
+RUN sh -c 'touch /app.jar'
+ENV JAVA_OPTS=""
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+
+
+/**** docker run ****/
+docker run \
+  -d --restart=always \
+  -e "SPRING_PROFILES_ACTIVE=prod" \
+  -p 8080:8080 \
+  prefix/imagename
