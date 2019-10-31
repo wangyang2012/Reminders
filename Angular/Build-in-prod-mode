@@ -1,0 +1,2 @@
+ng build --prod // need environment.prod.ts file and prod profile declaration in the .angular.json file
+ng build --configuration=production
