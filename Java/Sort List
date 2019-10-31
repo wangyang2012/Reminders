@@ -1,0 +1,83 @@
+https://dzone.com/articles/java-8-comparator-how-to-sort-a-list
+
+/************************ default sorting *****************************************/
+List<String> cities = Arrays.asList(
+       "Milan",
+       "london",
+       "San Francisco",
+       "Tokyo",
+       "New Delhi"
+);
+System.out.println(cities);
+//[Milan, london, San Francisco, Tokyo, New Delhi]
+cities.sort(String.CASE_INSENSITIVE_ORDER);
+System.out.println(cities);
+//[london, Milan, New Delhi, San Francisco, Tokyo]
+cities.sort(Comparator.naturalOrder());
+System.out.println(cities);
+//[Milan, New Delhi, San Francisco, Tokyo, london]
+
+
+List<Integer> numbers = Arrays.asList(6, 2, 1, 4, 9);
+System.out.println(numbers); //[6, 2, 1, 4, 9]
+numbers.sort(Comparator.naturalOrder());
+System.out.println(numbers); //[1, 2, 4, 6, 9]
+
+/************************ Sort by a string field *****************************************/
+List<Movie> movies = Arrays.asList(
+        new Movie("Lord of the rings"),
+        new Movie("Back to the future"),
+        new Movie("Carlito's way"),
+        new Movie("Pulp fiction"));
+movies.sort(Comparator.comparing(Movie::getTitle));
+movies.forEach(System.out::println);
+
+
+List<Movie> movies = Arrays.asList(
+        new Movie("Lord of the rings", 8.8),
+        new Movie("Back to the future", 8.5),
+        new Movie("Carlito's way", 7.9),
+        new Movie("Pulp fiction", 8.9));
+movies.sort(Comparator.comparingDouble(Movie::getRating).reversed());
+movies.forEach(System.out::println);
+
+
+/************************ Custom comparator *****************************************/
+List<Movie> movies = Arrays.asList(
+        new Movie("Lord of the rings", 8.8, true),
+        new Movie("Back to the future", 8.5, false),
+        new Movie("Carlito's way", 7.9, true),
+        new Movie("Pulp fiction", 8.9, false));
+movies.sort(new Comparator<Movie>() {
+    @Override
+    public int compare(Movie m1, Movie m2) {
+        if(m1.getStarred() == m2.getStarred()){
+            return 0;
+        }
+        return m1.getStarred() ? -1 : 1;
+     }
+});
+movies.forEach(System.out::println);
+
+
+movies.sort(Comparator.comparing(Movie::getStarred, (star1, star2) -> {
+    if(star1 == star2){
+         return 0;
+    }
+    return star1 ? -1 : 1;
+}));
+
+
+
+/************************ Sort a List With Chain of Comparators *****************************************/
+List<Movie> movies = Arrays.asList(
+        new Movie("Lord of the rings", 8.8, true),
+        new Movie("Back to the future", 8.5, false),
+        new Movie("Carlito's way", 7.9, true),
+        new Movie("Pulp fiction", 8.9, false));
+movies.sort(Comparator.comparing(Movie::getStarred)
+                      .reversed()
+                      .thenComparing(Comparator.comparing(Movie::getRating)
+                      .reversed())
+);
+movies.forEach(System.out::println);
