@@ -1,0 +1,3 @@
+To switch working folder in the command line of Windows, we have to add /d with the command cd:
+
+cd /d d:\xxxxxx
