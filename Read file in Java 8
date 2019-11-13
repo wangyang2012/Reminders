@@ -1,0 +1,12 @@
+
+readFile(String path) {
+  try (Stream<String> lines = Files.lines(Paths.get(path), StandardCharsets.UTF_8)){
+      lines.forEachOrdered(this::importLine);
+  } catch (IOException e) {
+      throw new UncheckedIOException(e);
+  }
+}
+
+private void importLine(String line) {
+  // treate line
+}
