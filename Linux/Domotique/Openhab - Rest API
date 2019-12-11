@@ -1,5 +1,8 @@
 https://www.openhab.org/docs/configuration/restdocs.html
 
+/******************** Add Documentation addon (swagger) ************************/
+PaperUI -> Addons -> Misc -> REST Documentation
+
 /********************  No 'Access-Control-Allow-Origin' header is present on the requested resource *******************************/
 add this line in the file services/runtime.cfg:
 CORS issues:org.eclipse.smarthome.cors:enable=true
