@@ -1,0 +1,15 @@
+https://www.openhab.org/docs/configuration/restdocs.html
+
+/********************  No 'Access-Control-Allow-Origin' header is present on the requested resource *******************************/
+add this line in the file services/runtime.cfg:
+CORS issues:org.eclipse.smarthome.cors:enable=true
+
+/******************** Control switch ON/OFF *****************************/
+curl -X POST --header "Content-Type: text/plain" --header "Accept: application/json" -d "OFF" "http://{openHAB_IP}:8080/rest/items/My_Item"
+
+
+// ThingStatusInfoChangedEvent - The status of a thing changed.
+curl "http://{openHAB_IP}:8080/rest/events?topics=smarthome/things/{thingUID}/statuschanged"
+
+// ChannelTriggeredEvent - A channel has been triggered.
+curl "http://{openHAB_IP}:8080/rest/events?topics=smarthome/channels/{channelUID}/triggered"
