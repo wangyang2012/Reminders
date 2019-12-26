@@ -1,0 +1,19 @@
+docker pull homeassistant/raspberrypi4-homeassistant
+
+
+
+/*************** docker-compose.yml ******************/
+version: '3'
+services:
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/raspberrypi4-homeassistant:latest
+    volumes:
+      - /home/openhabian/homeassistant/config:/config
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyACM0:/dev/ttyACM0
+    environment:
+      - TZ=Europe/Paris
+    restart: always
+    network_mode: host
