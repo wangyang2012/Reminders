@@ -12,4 +12,5 @@ tcpdump -i any port 1521 or port 636 and host www.google.fr -A -s0
 
 
 resize photos
+sudo apt install imagemagick
 ls *.jpg | xargs -n1 sh -c 'convert $0 -geometry 1024x resized/$0'
