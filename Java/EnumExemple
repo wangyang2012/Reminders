@@ -1,0 +1,34 @@
+public enum PriorityEnum {
+	NONE {
+		public PriorityEnum getBoostedPriority() {
+			return LOW;
+		}
+	},
+	LOW {
+		public PriorityEnum getBoostedPriority() {
+			return MEDIUM;
+		}
+	},
+	MEDIUM {
+		public PriorityEnum getBoostedPriority() {
+			return HIGH;
+		}
+	},
+	HIGH {
+		public PriorityEnum getBoostedPriority() {
+			return HIGH;
+		}
+	};
+
+	public abstract PriorityEnum getBoostedPriority(); // With this signature, every member of Enum should implement this function
+
+	public static String getBoostedPriority(String priority) {
+		try {
+			PriorityEnum priorityEnum = PriorityEnum.valueOf(priority);
+			return priorityEnum.getBoostedPriority().toString();
+		} catch (Exception e) {
+      // when priority is unknown value, return "NONE" as default
+			return NONE.toString();
+		}
+	}
+}
