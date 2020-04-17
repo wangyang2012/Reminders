@@ -121,3 +121,27 @@ systemctl restart cockpit.socket
 
 UDP 192.168.1.106:554/stream1
 admin:01163445
+
+############################ Next cloud ##################################################
+Install Apache
+Install Mysql
+
+wget https://download.nextcloud.com/server/releases/nextcloud-15.0.7.zip
+unzip nextcloud-15.0.7.zip to /var/www/html
+sudo chown -R apache:apache nextcloud
+sudo vi /etc/httpd/conf.d/nextcloud.conf
+sudo -u apache php /var/www/html/nextcloud/occ maintenance:mode --off
+-- create nextcloud base in mysql
+sudo -u apache php /var/www/html/nextcloud/occ maintenance:mode --on
+
+-- /etc/httpd/conf.d/nextcloud.conf
+<VirtualHost *:80>
+  DocumentRoot /var/www/html/
+  ServerName  www.yang-server.com
+
+<Directory "/var/www/html/">
+  Require all granted
+  AllowOverride All
+  Options FollowSymLinks MultiViews
+</Directory>
+</VirtualHost>
