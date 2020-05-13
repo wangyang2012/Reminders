@@ -1,7 +1,0 @@
-// solution 1
-align-items: center;
-
-// solution 2
-display: flex;
-justify-content: center; // horizontal
-align-items: center; // vertical
