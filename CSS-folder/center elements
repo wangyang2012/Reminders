@@ -26,15 +26,23 @@
     <div id="toCenter">Your text</div>
 </div>
 
+-------------------- method 2 bis --------------------------
+#wrapper {
+    text-align: center;
+}
 
 ############### VERTICAL CENTER ###############
 .vertical-center {
-/*    margin: auto; // very important
-    text-align: center;
-*/
   display: flex;
   align-items: center;
   justify-content: center; 
+  
+  
+/*    margin: auto; // very important
+    text-align: center;
+*/
+
+
 }
     
 
