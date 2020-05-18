@@ -3,6 +3,9 @@ svn status
 svn up // pull
 svn update // pull
 
+###### merge ######
+svn merge SOURCE[@REV] [CIBLE_COPIE_TRAVAIL]
+
 ###### commit ######
 svn ci -m "message" file1 file2 file3
 
