@@ -1,0 +1,4 @@
+mkdir empty
+robocopy empty folder-to-delete /purge
+rmdir folder-to-delete
+rmdir empty
