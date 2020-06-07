@@ -1,0 +1,17 @@
+https://blog.csdn.net/zhuxiongyin/article/details/97662740
+
+# detect brute force tests
+vi /var/log/secure
+
+# change SSH port:
+vi /etc/ssh/sshd_config
+change port to 50822
+firewall-cmd --add-port=50822/tcp --permanent
+firewall-cmd --reload
+systemctl restart sshd
+
+# configure firewall to allow only known hosts
+
+# install third party software fail2ban
+yum install fail2ban
+fail2ban-client start
