@@ -1,0 +1,45 @@
+https://fr.godaddy.com/help/installer-manuellement-un-certificat-ssl-sur-mon-serveur-apache-centos-5238
+
+Get 3 files:
+- private key file: *.key
+- certificate file: *.crt
+- certificate chain file: gd_bundle-g2-g1.crt
+
+vi /etc/httpd/conf.d/ssl.conf
+put bellow changements:
+
+  <VirtualHost xxx.xxx.x.x:443>
+    DocumentRoot /var/www/coolexample
+    ServerName coolexample.com www.coolexample.com
+      SSLEngine on
+      #SSLProtocol all -SSLv2 -SSLv3
+      #SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+      SSLCertificateFile /path/to/coolexample.crt
+      SSLCertificateKeyFile /path/to/privatekey.key
+      SSLCertificateChainFile /path/to/intermediate.crt
+      
+  </VirtualHost>
+  SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
+  SSLProtocol All -SSLv2 -SSLv3
+  SSLHonorCipherOrder On
+  # Disable preloading HSTS for now.  You can use the commented out header line that includes
+  # the "preload" directive if you understand the implications.
+  #Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains"
+  Header always set X-Frame-Options DENY
+  Header always set X-Content-Type-Options nosniff
+  # Requires Apache >= 2.4
+  SSLCompression off
+  SSLUseStapling on
+  SSLStaplingCache "shmcb:logs/stapling-cache(150000)"
+  # Requires Apache >= 2.4.11
+  # SSLSessionTickets Off
+
+vi /etc/httpd/conf.d/non-ssl.conf
+  <VirtualHost *:80>
+        ServerName domain.com
+        Redirect "/" "https://www.domain.com/"
+  </VirtualHost>
+
+apachectl configtest
+apachectl restart
