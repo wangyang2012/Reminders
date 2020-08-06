@@ -1,0 +1,39 @@
+import static org.mockito.Mockito.doAnswer;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+
+@RunWith(MockitoJUnitRunner.class)
+public MyTestClass {
+ 
+  @Mock
+  private UserDao userDao;
+  
+  private UserService userService;
+  
+  @Before
+  protected void doSetup() {
+    MockitoAnnotations.initMocks(this);
+    
+    // Mock normal method
+    when(userDao.test()).thenReturn("OK");
+    
+    // Mock void methods
+    doNothing().when(userDao).test();
+    doThrow(NullPointerException.class).when(userDao).test();
+    doAnswer((i) -> {
+			System.out.println("Calling mocked test method...");
+			return null;
+		}).when(userDao).test();
+		userService = new UserService(userDao);
+  }
+ 
+  @Test
+  public void myTest() {
+    userService.test();
+  }
+}
+  
