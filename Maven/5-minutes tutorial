@@ -1,0 +1,13 @@
+https://my.oschina.net/u/873661/blog/195301
+1.validate
+2.generate-sources
+3.process-sources
+4.generate-resources
+5.process-resources
+6.compile
+
+mvn archetype:generate -DgroupId=com.oschina.test -DartifactId=my-maven-test -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+mvn clean package
+
+java -cp target/my-maven-test-1.0-SNAPSHOT.jar com.oschina.test.App
