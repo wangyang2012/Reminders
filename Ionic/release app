@@ -1,0 +1,7 @@
+https://ionicframework.com/docs/v1/guide/publishing.html
+
+ionic cordova build --release android
+cd platforms\android\app\build\outputs\apk\release\
+keytool -genkey -v -keystore my-app.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore fjscompta.keystore app-release-unsigned.apk alias_name
+zipalign -v 4 app-release-unsigned.apk fjscompta.apk
