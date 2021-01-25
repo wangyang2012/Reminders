@@ -1,0 +1,1 @@
+psql -v ON_ERROR_STOP=1 // Stop at the first error when executing cmd line
