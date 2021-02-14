@@ -1,0 +1,1 @@
+ls *.jpg | xargs -n1 sh -c 'convert $0 -geometry 1024x resized/$0'
