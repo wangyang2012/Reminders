@@ -1,0 +1,21 @@
+################## Upgrade from 17.04 to 17.10 (artful) ##################
+
+1. change APT sources list:
+sudo sed -i.orig -r 's/us\.archive\.|security\./old-releases./' /etc/apt/sources.list
+# change us to your location
+sudo apt update
+sudo apt upgrade
+
+2. use the artful upgrade tool
+cd
+mkdir tmp
+wget http://old-releases.ubuntu.com/ubuntu/dists/artful-updates/main/dist-upgrader-all/current/artful.tar.gz
+tar xf artful.tar.gz
+sudo ./artful
+
+################## Upgrade 17.10 to 18.04 (LTS Bionic Beaver) ################## 
+sudo apt update 
+sudo apt upgrade
+sudo apt dist-upgrade
+sudo apt install update-manager-core
+sudo do-release-upgrade
