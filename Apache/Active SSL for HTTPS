@@ -1,10 +1,12 @@
-https://fr.godaddy.com/help/installer-manuellement-un-certificat-ssl-sur-mon-serveur-apache-centos-5238
+1. Generate a private key file(*.key) and a request file (*.csr)
+openssl req -new -newkey rsa:2048 -nodes -keyout yourdomain.key -out yourdomain.csr
 
-Get 3 files:
+2. Upload *.csr file content to GoDaddy to get ths certificat zip:
 - private key file: *.key
 - certificate file: *.crt
 - certificate chain file: gd_bundle-g2-g1.crt
 
+3. Edit ssl.conf file
 vi /etc/httpd/conf.d/ssl.conf
 put bellow changements:
 
@@ -19,21 +21,6 @@ put bellow changements:
       SSLCertificateChainFile /path/to/intermediate.crt
       
   </VirtualHost>
-  SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
-  SSLProtocol All -SSLv2 -SSLv3
-  SSLHonorCipherOrder On
-  # Disable preloading HSTS for now.  You can use the commented out header line that includes
-  # the "preload" directive if you understand the implications.
-  #Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"
-  Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains"
-  Header always set X-Frame-Options DENY
-  Header always set X-Content-Type-Options nosniff
-  # Requires Apache >= 2.4
-  SSLCompression off
-  SSLUseStapling on
-  SSLStaplingCache "shmcb:logs/stapling-cache(150000)"
-  # Requires Apache >= 2.4.11
-  # SSLSessionTickets Off
 
 vi /etc/httpd/conf.d/non-ssl.conf
   <VirtualHost *:80>
@@ -43,3 +30,12 @@ vi /etc/httpd/conf.d/non-ssl.conf
 
 apachectl configtest
 apachectl restart
+
+4. If SSLEngine not enabled:
+  sudo yum install mod_ssl
+  
+5. If file access blocked by SELinux
+  setsebool -P httpd_read_user_content 1
+6. To ckeck system journal
+  journalctl -xe
+  cat /var/log/httpd/error.log
