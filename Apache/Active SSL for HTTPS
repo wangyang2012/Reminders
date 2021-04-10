@@ -32,10 +32,14 @@ apachectl configtest
 apachectl restart
 
 4. If SSLEngine not enabled:
-  sudo yum install mod_ssl
+  sudo yum install openssl mod_ssl
   
 5. If file access blocked by SELinux
   setsebool -P httpd_read_user_content 1
+  
 6. To ckeck system journal
   journalctl -xe
   cat /var/log/httpd/error.log
+
+7. Apache don't open 443 port
+  vi /etc/httpd/conf/http.conf and add: 'Listen 443'
