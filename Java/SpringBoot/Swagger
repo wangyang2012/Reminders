@@ -1,3 +1,48 @@
+/****************** V3 **************************/
+1. Add dependence in pom.xml
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+It works already!
+http://localhost:8080/swagger-ui.html
+
+2. Add SwaggerConfig.java
+@Configuration
+public class SwaggerConfig {
+    @Bean
+    public OpenAPI customOpenAPI(@Value("${application.name}") String appName, @Value("${application.description}") String appDesciption, @Value("${application.version}") String appVersion) {
+        return new OpenAPI()
+                .info(new Info()
+                        .title(appName)
+                        .version(appVersion)
+                        .description(appDesciption));
+    }
+}
+
+3. Get project information from pom.xml in application.properties / application.yml
+application:
+  name: @project.name@
+  version: @project.version@
+  description: @project.description@
+  
+4. Add project information in pom.xml
+<project>
+    <version>1.0.5-SNAPSHOT</version>
+    <name>My project name</name>
+    <description>REST API</description>
+</project>
+
+Tutorial:
+https://dzone.com/articles/openapi-3-documentation-with-spring-boot
+
+Migration from Swagger v2 to V3
+https://springdoc.org/migrating-from-springfox.html
+
+
+/****************** V2 **************************/
 1. Add dependence in pom.xml
 
 <dependency>
