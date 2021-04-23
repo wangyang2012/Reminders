@@ -15,14 +15,27 @@ public class ModelMapperConfig {
     }
 }
 
-3. Use Mapper class
+3. Use ModelMapper
 @Component
-public class MyMapper {
+public class UserMapper {
 
     @Autowired
     private ModelMapper modelMapper;
 
     public UserDto convertToDto(User user) {
         return modelMapper.map(user, UserDTO.class);
+    }
+}
+
+4. Use Model Mapper class
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    public UserDto getUser(User user) {
+        UserDto userDto = userMapper.convertToDto(user);
+        return userDto;
     }
 }
