@@ -1,0 +1,24 @@
+
+@ControllerAdvice
+public class MyExceptionHandler extends ResponseEntityExceptionHandler {
+
+    // Handle customize exceptions
+    @ExceptionHandler(value = {BusinessException.class, DealInstantiationException.class, CalculationException.class})
+    protected ResponseEntity<Object> handleBusinessException(BusinessException ex, WebRequest request) {
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {TechnicalException.class})
+    protected ResponseEntity<Object> handleTechnicalException(TechnicalException ex, WebRequest request) {
+        return handleExceptionInternal(ex, ex.getMessage(),
+                new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
+
+    // Handle common exceptions: They are already handled by ResponseEntityExceptionHandler, but we can override to change actions
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return this.handleExceptionInternal(ex, ex.getMessage(), headers, status, request);
+    }
+    
+}
