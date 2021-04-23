@@ -1,0 +1,16 @@
+public class User {
+  @NotNull(message="This field should not be null")
+  @Min(5)
+  @Max(value=10, message="Id should be equals or less than 10")
+  private Integer id;
+  
+  @Email(message="Email format")
+  private String email;
+  
+  @NotBlank
+  @Pattern(regexp = "Paris|London", message = "City should by Paris or London")
+  private String city;
+  
+  @Size(min = 3, max = 3, message = "Pseudo should have only 3 characters")
+  private String pseudo;
+}
