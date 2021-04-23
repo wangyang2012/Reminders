@@ -1,3 +1,10 @@
+1. Add dependency in Pom.xml
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+2. Add anotation on the bean to be validated
 public class User {
   @NotNull(message="This field should not be null")
   @Min(5)
@@ -13,4 +20,16 @@ public class User {
   
   @Size(min = 3, max = 3, message = "Pseudo should have only 3 characters")
   private String pseudo;
+}
+
+
+3. !Important! Don't forget to add @Valid in the Controller
+@RestController
+@RequestMapping("/user")
+public class ForexController {
+
+    @PostMapping("/create")
+    public UserDto create(@Valid @RequestBody User user) throws Exception {        
+        ...
+    }
 }
