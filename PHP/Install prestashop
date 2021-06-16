@@ -1,4 +1,6 @@
 /************************ Ubunbu 20.04 PHP7.4 ************************/
+https://websiteforstudents.com/how-to-install-prestashop-on-ubuntu-20-04-18-04-with-nginx-and-lets-encrypt/
+
 # Install apache2
 sudo apt install net-tools
 sudo apt update
