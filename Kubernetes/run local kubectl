@@ -3,7 +3,7 @@ run kubeconfig.bat
 ------------------------------
 SET HTTP_PROXY=http://proxy-intra.par.emea.cib:8080
 SET HTTPS_PROXY=http://proxy-intra.par.emea.cib:8080
-curl -k -X POST -H "Content-Type: application/json" --data "{\"username\":\"UT\",\"password\":\"T1t@nic202110\"}" https://kubeone-auth-service.caas-apps-int.ca.cib/kubeone/api/v1/getKubeConfig -o config 
+curl -k -X POST -H "Content-Type: application/json" --data "{\"username\":\"UT\",\"password\":\"XXXXXX\"}" https://kubeone-auth-service.caas-apps-int.ca.cib/kubeone/api/v1/getKubeConfig -o config 
 ------------------------------
 
 /****** create env variable ******/
