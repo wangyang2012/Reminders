@@ -1,0 +1,3 @@
+git checkout "br_dest"
+git merge --no-ff "br_source"
+git push "br_dest"
