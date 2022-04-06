@@ -27,3 +27,6 @@ phpinfo ();
 sudo systemctl restart httpd
 
 Install Prestashop
+
+Configure Prestashop
+Administration -> Parametre général -> Trafic et SEO -> Change domain name and URL
