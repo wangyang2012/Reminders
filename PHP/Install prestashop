@@ -1,3 +1,32 @@
+/************************ Install HTTPS ************************/
+
+  Buy SSL certificates to obtain 3 files: Key (private key), CRT (certificate file) and ca-bundle
+  Go to apache /etc/httpd/conf.d
+  vi ssl.conf:
+    Listen 443
+    <VirtualHost *:443>
+        DocumentRoot /var/www/html
+        ServerName marais-shop.fr
+        SSLEngine on
+        SSLCertificateFile /home/centos/certificat/2022-3/www_marais-shop_fr.crt
+        SSLCertificateKeyFile /home/centos/certificat/2022-3/www_marais-shop_fr.key
+        SSLCertificateChainFile /home/centos/certificat/2022-3/www_marais-shop_fr.ca-bundle
+      </VirtualHost>
+      
+  vi no-ssl.conf:
+  <VirtualHost *:80>
+        ServerName marais-shop.fr
+        Redirect "/" "https://marais-shop.fr/"
+  </VirtualHost>
+  
+  Restart apache
+  sudo systemctl restart httpd
+
+  update Prestashop database:
+  update ps_configuration set value=1 where name like "%SSL_ENABLED%";
+  
+
+
 /************************ Ubunbu 20.04 PHP7.4 ************************/
 https://websiteforstudents.com/how-to-install-prestashop-on-ubuntu-20-04-18-04-with-nginx-and-lets-encrypt/
 
