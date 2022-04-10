@@ -1,4 +1,31 @@
-1. Generate a private key file(*.key) and a request file (*.csr)
+  Buy SSL certificates to obtain 3 files: Key (private key), CRT (certificate file) and ca-bundle
+  Go to apache /etc/httpd/conf.d
+  vi ssl.conf:
+    Listen 443
+    <VirtualHost *:443>
+        DocumentRoot /var/www/html
+        ServerName marais-shop.fr
+        SSLEngine on
+        SSLCertificateFile /home/centos/certificat/2022-3/www_marais-shop_fr.crt
+        SSLCertificateKeyFile /home/centos/certificat/2022-3/www_marais-shop_fr.key
+        SSLCertificateChainFile /home/centos/certificat/2022-3/www_marais-shop_fr.ca-bundle
+      </VirtualHost>
+      
+  vi no-ssl.conf:
+  <VirtualHost *:80>
+        ServerName marais-shop.fr
+        Redirect "/" "https://marais-shop.fr/"
+  </VirtualHost>
+  
+  Restart apache
+  sudo systemctl restart httpd
+
+  update Prestashop database:
+  update ps_configuration set value=1 where name like "%SSL_ENABLED%";
+  
+  
+  
+  1. Generate a private key file(*.key) and a request file (*.csr)
 openssl req -new -newkey rsa:2048 -nodes -keyout yourdomain.key -out yourdomain.csr
 
 2. Upload *.csr file content to GoDaddy to get ths certificat zip:
