@@ -4,6 +4,7 @@ netstat -anp
 *********** check TCP ports ***************
 lsof -i TCP
 netstat -vatn
+lsof -nPi @192.168.1.123:443 // check all connections to the destination
 
 *********** check UDP ports ***************
 netstat -vaun
