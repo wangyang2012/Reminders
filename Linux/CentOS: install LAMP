@@ -15,9 +15,9 @@ yum -y install httpd
 systemctl start httpd.service
 systemctl enable httpd.service
 
-firewall-cmd --permanent --zone=public --add-service=http 
-firewall-cmd --permanent --zone=public --add-service=https
-firewall-cmd --reload
+// firewall-cmd --permanent --zone=public --add-service=http 
+// firewall-cmd --permanent --zone=public --add-service=https
+// firewall-cmd --reload
 
 // Install PHP
 yum -y install php
