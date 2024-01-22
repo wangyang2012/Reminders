@@ -1,1 +1,17 @@
 ng serve --host 0.0.0.0
+
+
+
+
+ERROR Error: NG0100: ExpressionChangedAfterItHasBeenCheckedError: Expression has changed after it was checked. Previous value: 'undefined'. Current value: '[object Object]'
+Solution:
+detectChanges()
+
+  protected cdRef: ChangeDetectorRef;
+  constructor(protected injector: Injector) {
+    this.cdRef = injector.get<ChangeDetectorRef>(ChangeDetectorRef);
+  }
+
+  onInit {
+    this.cdRef.detectChanges();
+  }
