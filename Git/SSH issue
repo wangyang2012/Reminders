@@ -1,0 +1,14 @@
+Check SSH connection:
+ssh -T git@bitbucket.org
+
+Change remote URL (from HTTPS to SSH):
+git remote set-url origin git@bitbucket.org:tutorials/tutorials.git
+
+How to generate a SSH key:
+ssh-keygen -t ed25519 -b 4096 -C "{username@emaildomain.com}" -f {ssh-key-name}
+
+How to add a key to SSH agent:
+Start SSH agent
+eval $(ssh-agent)
+Add key:
+ssh-add ~/{ssh-key-name}
