@@ -1,0 +1,8 @@
+# Generate SSH key or show local ssh keys
+ssh-keygen -t ed25519 -C "your_email@example.com"
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+cat /home/user/.ssh/key.pub
+
+# Add ssh key to server (run on guest terminal)
+ssh-copy-id your_server_user@your_server_ip
