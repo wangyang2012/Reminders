@@ -1,0 +1,4 @@
+On January 31, 2022, CentOS team has finally removed all packages for CentOS 8 from the official mirrors. CentOS 8 has reached its end-of-life on December 31, 2021, but the packages were kept on the official mirrors for a while. Now they’re moved to https://vault.centos.org
+
+sudo sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
+sudo sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
