@@ -1,0 +1,254 @@
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>8.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>8.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>forms</artifactId>
+            <version>8.0.3</version>
+        </dependency>
+
+
+
+  public byte[] exportPDF() throws TechnicalException {
+    try {
+      PdfWriter pdfWriter = new PdfWriter("iTextHelloWorld.pdf");
+      PdfDocument pdfDoc = new PdfDocument(pdfWriter);
+      Document document = new Document(pdfDoc, PageSize.A4, false);
+      document.setTopMargin(50);
+      document.setBottomMargin(50);
+
+      createExampleData(document, pdfDoc, pdfWriter);
+
+      this.addHeaderAndFooter(pdfDoc, document, pdfWriter);
+
+      document.close();
+//      pdfDoc.close();
+
+      return new byte[0];
+    } catch(Exception e) {
+      throw new TechnicalException("Failed to create PDF document", e);
+    }
+  }
+
+
+
+
+  private void createExampleData(Document document, PdfDocument pdfDoc, PdfWriter pdfWriter) throws IOException {
+
+    Paragraph paragraph = new Paragraph("Hello world");
+    document.add(paragraph);
+
+//    // Textarea
+//    TextArea flattenTextArea = new TextArea("EXAMPLE TEXT AREA");
+//    flattenTextArea.setInteractive(true);
+//    flattenTextArea.setProperty(FormProperty.FORM_FIELD_VALUE, "Flatten\ntext area\nwith height");
+//    flattenTextArea.setProperty(Property.HEIGHT, new UnitValue(UnitValue.POINT,100));
+//    flattenTextArea.setProperty(Property.BORDER, new SolidBorder(2f));
+//    document.add(flattenTextArea);
+//
+//    // Textarea
+//    flattenTextArea = new TextArea("EXAMPLE TEXT AREA 2");
+//    flattenTextArea.setInteractive(true);
+//    flattenTextArea.setProperty(FormProperty.FORM_FIELD_VALUE, "Flatten text area with height");
+//    flattenTextArea.setProperty(Property.HEIGHT, new UnitValue(UnitValue.POINT,100));
+//    flattenTextArea.setProperty(Property.BORDER, new SolidBorder(0f));
+//    document.add(flattenTextArea);
+
+    //      PdfPage page = new PdfPage();
+
+
+    // sample data
+    addSampleData(document);
+    pdfDoc.setDefaultPageSize(PageSize.A4.rotate());
+    document.add(new AreaBreak());
+    addSampleData(document);
+
+    pdfDoc.setDefaultPageSize(PageSize.A4);
+    document.add(new AreaBreak());
+    addSampleData(document);
+    pdfDoc.setDefaultPageSize(PageSize.A4.rotate());
+    document.add(new AreaBreak());
+    addSampleTables(document);
+  }
+
+  private void addSampleTables(Document document) {
+
+    document.add(new Paragraph("This is an example of a simple table: "));
+    float [] pointColumnWidths = {150F, 250F, 150F};
+    Table table = new Table(pointColumnWidths);
+
+    // Adding cells to the table
+    table.addCell(new Cell().add(new Paragraph("INVOICE")));
+    table.addCell(new Cell().add(new Paragraph("Raju")));
+    table.addCell(new Cell().add(new Paragraph("Id")));
+    table.addCell(new Cell().add(new Paragraph("1001")));
+    table.addCell(new Cell().add(new Paragraph("Designation")));
+    Cell longCell = new Cell().add(new Paragraph("Programmer DesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignationDesignation"));
+    longCell.setMaxWidth(100F);
+    table.addCell(longCell);
+    document.add(table);
+
+    document.add(new Paragraph("This is an example of nexted table: "));
+
+    // Creating a table
+    float [] pointColumnWidths1 = {150f, 150f};
+    Table table2 = new Table(pointColumnWidths1);
+
+    // Populating row 1 and adding it to the table
+    Cell cell1 = new Cell();
+    cell1.add(new Paragraph("Name"));
+    table2.addCell(cell1);
+
+    Cell cell2 = new Cell();
+    cell2.add(new Paragraph("Raju"));
+    table2.addCell(cell2);
+
+    // Populating row 2 and adding it to the table
+    Cell cell3 = new Cell();
+    cell3.add(new Paragraph("Id"));
+    table2.addCell(cell3);
+
+    Cell cell4 = new Cell();
+    cell4.add(new Paragraph("1001"));
+    table2.addCell(cell4);
+
+    // Populating row 3 and adding it to the table
+    Cell cell5 = new Cell();
+    cell5.add(new Paragraph("Designation"));
+    table2.addCell(cell5);
+
+    Cell cell6 = new Cell();
+    cell6.add(new Paragraph("Programmer"));
+    table2.addCell(cell6);
+
+    // Creating nested table for contact
+    float [] pointColumnWidths2 = {150f, 150f};
+    Table nestedTable = new Table(pointColumnWidths2);
+
+    // Populating row 1 and adding it to the nested table
+    Cell nested1 = new Cell();
+    nested1.add(new Paragraph("Phone"));
+    nestedTable.addCell(nested1);
+
+    Cell nested2 = new Cell();
+    nested2.add(new Paragraph("9848022338"));
+    nestedTable.addCell(nested2);
+
+    // Populating row 2 and adding it to the nested table
+    Cell nested3 = new Cell();
+    nested3.add(new Paragraph("email"));
+    nestedTable.addCell(nested3);
+
+    Cell nested4 = new Cell();
+    nested4.add(new Paragraph("Raju123@gmail.com"));
+    nestedTable.addCell(nested4);
+
+    // Populating row 3 and adding it to the nested table
+    Cell nested5 = new Cell();
+    nested5.add(new Paragraph("Address"));
+    nestedTable.addCell(nested5);
+
+    Cell nested6 = new Cell();
+    nested6.add(new Paragraph("Hyderabad"));
+    nestedTable.addCell(nested6);
+
+    // Adding table to the cell
+    Cell cell7 = new Cell();
+    cell7.add(new Paragraph("Contact"));
+    table2.addCell(cell7);
+
+    Cell cell8 = new Cell();
+    nestedTable.setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 2f));
+    cell8.add(nestedTable);
+    table2.addCell(cell8);
+
+    document.add(table2);
+  }
+
+
+
+  private void addSampleData(Document document) throws IOException {
+    Paragraph p = new Paragraph();
+
+    //PDF/UA
+    //Embed font
+    p.add("The quick brown ");
+//
+//    Image img = new Image(ImageDataFactory.create(getClass().getClassLoader().getResource("my-image.png")));
+//
+//    //PDF/UA
+//    //Set alt text
+//    img.getAccessibilityProperties().setAlternateDescription("Fox");
+//    p.add(img);
+//    p.add(" jumps over the lazy ");
+//
+//    img = new Image(ImageDataFactory.create(getClass().getClassLoader().getResource("my-image.png")));
+//
+//    //PDF/UA
+//    //Set alt text
+//    img.getAccessibilityProperties().setAlternateDescription("Dog");
+//    p.add(img);
+//
+    document.add(p);
+
+    p = new Paragraph("aaaaaaaaaaaaaaaaaaaaa").setFontSize(20);
+    document.add(p);
+    p = new Paragraph("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb").setFontSize(20);
+    document.add(p);
+    p = new Paragraph("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris hendrerit ornare sapien. Etiam sit amet orci ultrices massa euismod gravida. Quisque venenatis tempus commodo. Pellentesque accumsan mattis magna vel sodales. Sed iaculis vehicula sapien, nec venenatis nibh vulputate non. In elementum luctus tortor in elementum. Nullam convallis auctor leo. Mauris ac tincidunt justo, sit amet lacinia risus. Proin at metus vel ex lobortis sodales sed ac nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus.\n" +
+        "Sed erat libero, vulputate a accumsan sit amet, laoreet nec orci. Vestibulum ornare sed magna ac eleifend. In vehicula posuere odio at efficitur. Maecenas eu venenatis justo. Ut a fermentum risus. Nullam tempor erat posuere sapien fermentum vehicula. Cras sagittis, massa at porta convallis, lectus lectus rhoncus eros, non scelerisque mauris lorem sed eros. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam nisl sapien, convallis ac quam non, porta pellentesque eros. Sed dictum, nunc vel maximus dictum, tortor ipsum porttitor neque, eu malesuada ex odio id urna. Ut facilisis, lacus ut viverra ultrices, felis leo molestie magna, id condimentum lorem dolor at eros.\n" +
+        "Mauris maximus velit ante, ut iaculis erat fringilla sed. Nam pulvinar, orci vitae commodo tempus, turpis nisi pellentesque lacus, nec vehicula tortor purus ultrices ante. Curabitur quam ex, aliquam non nisi id, lacinia rhoncus dolor. Proin et orci et mauris mollis volutpat. Duis vestibulum pulvinar metus blandit imperdiet. Curabitur at lorem lectus. Aliquam pulvinar facilisis vulputate. Aliquam eget pharetra sapien.\n" +
+        "Etiam tincidunt ornare libero, a mattis quam vehicula ac. Proin cursus lacus eget ipsum condimentum, sed fermentum tortor dignissim. Nulla porta felis id ex luctus hendrerit. Sed laoreet quam at viverra venenatis. Nulla imperdiet varius nulla, nec maximus ante tristique et. Donec nec massa commodo, euismod felis nec, vulputate lorem. Sed varius blandit libero ut volutpat. Quisque elementum dui sed libero rutrum mollis. Duis lacinia, ipsum ac iaculis vehicula, nulla mauris aliquam lacus, eget auctor nisi dui varius tellus.\n" +
+        "Nullam at felis sit amet massa imperdiet malesuada. Nulla facilisi. Suspendisse in lobortis ligula, non congue erat. Maecenas imperdiet ultrices nisi. In tincidunt metus elit, id dapibus nibh posuere maximus. Donec pretium, mauris at pellentesque aliquet, augue justo feugiat quam, sit amet placerat nulla ex nec elit. Praesent aliquet mi et quam pellentesque mattis eu vel tortor. Nulla facilisi. Vivamus consequat eros magna, sit amet tempor velit ultrices quis. In ante metus, laoreet quis tincidunt vitae, tempor eget urna. Nullam eget libero id nisl fermentum ornare. Sed rhoncus vel nunc ut semper. Nullam aliquet nisi sed felis scelerisque interdum.\n" +
+        "Morbi mattis neque vitae laoreet ultrices. Mauris elementum non eros laoreet malesuada. Morbi faucibus enim nec enim varius placerat. Nam velit velit, pharetra id dignissim nec, blandit vel eros. Mauris laoreet tellus eget risus vehicula, ut porta tellus porta. Praesent pulvinar, urna eu aliquam pulvinar, metus leo varius leo, id euismod odio metus sit amet nunc. Praesent id vehicula est, quis volutpat justo. Ut libero diam, molestie vitae tellus quis, lobortis fermentum ex. Pellentesque sit amet felis ultricies, volutpat neque pretium, luctus ligula.").setFontSize(14);
+    document.add(p);
+
+//    com.itextpdf.layout.element.List list = new com.itextpdf.layout.element.List().setFontSize(20);
+//    list.add(new ListItem("quick"));
+//    list.add(new ListItem("brown"));
+//    list.add(new ListItem("fox"));
+//    list.add(new ListItem("jumps"));
+//    list.add(new ListItem("over"));
+//    list.add(new ListItem("the"));
+//    list.add(new ListItem("lazy"));
+//    list.add(new ListItem("dog"));
+//    document.add(list);
+  }
+
+    private void addHeaderAndFooter(PdfDocument pdfDoc, Document document, PdfWriter pdfWriter) throws IOException {
+      Paragraph header = new Paragraph("Header title")
+          .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
+          .setFontSize(14)
+          .setBackgroundColor(ColorConstants.LIGHT_GRAY)
+          .setHeight(30f)
+          .setVerticalAlignment(VerticalAlignment.MIDDLE)
+          .setFontColor(ColorConstants.GREEN);
+
+
+      int numberOfPages = pdfDoc.getNumberOfPages();
+      for (int i = 1; i <= numberOfPages; i++) {
+
+        if (pdfDoc.getPage(i).getPageSize().getWidth() > 800) {
+          // is landscap
+          document.showTextAligned(header,20, 575, i, TextAlignment.LEFT, VerticalAlignment.TOP, 0);
+          document.showTextAligned(new Paragraph(String.format("page %s of %s", i, numberOfPages)),
+              822, 20, i, TextAlignment.RIGHT, VerticalAlignment.TOP, 0);
+        } else {
+          // is portrait
+          document.showTextAligned(header,20, 822, i, TextAlignment.LEFT, VerticalAlignment.TOP, 0);
+          document.showTextAligned(new Paragraph(String.format("page %s of %s", i, numberOfPages)),
+              575, 20, i, TextAlignment.RIGHT, VerticalAlignment.TOP, 0);
+        }
+
+      }
+
+    }
