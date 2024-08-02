@@ -22,6 +22,9 @@ public class SwaggerConfig {
     }
 }
 
+Add this line in application.properties:
+springdoc.default-produces-media-type=application/json
+
 3. Get project information from pom.xml in application.properties / application.yml
 application:
   name: @project.name@
