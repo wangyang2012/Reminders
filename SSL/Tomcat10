@@ -1,0 +1,16 @@
+Generate PKC file:
+  openssl pkcs12 -export -in your_domain.crt -inkey your_domain.key -out keystore.p12 -name tomcat -CAfile intermediate.crt -caname root
+
+
+Configure the /config/server.xml file:
+    <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="150" SSLEnabled="true"
+               maxParameterCount="1000"
+               >
+        <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
+        <SSLHostConfig>
+            <Certificate certificateKeystoreFile="conf/keystore.p12"
+                         certificateKeystorePassword="changeit" keystoreType="PKCS12" />
+        </SSLHostConfig>
+    </Connector>
+
