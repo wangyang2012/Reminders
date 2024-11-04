@@ -2,7 +2,9 @@ mkdir -p /complete/path
 ls -larth
 chown -R ywang:ywang folder
 du -sh FOLDER // check folder size
+du -h --max-depth=1 // check folder size
 
+df -h // check disk usage
 
 tcpdump -i any port 1521 or port 636 and host www.google.fr -A -s0
 -s0 don't truncate display
