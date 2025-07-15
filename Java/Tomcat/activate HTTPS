@@ -1,0 +1,23 @@
+Generate certificat key
+openssl pkcs12 -export -in certificate.crt -inkey private.key -out keystore.p12 -name tomcat -CAfile ca_bundle.crt -caname root
+
+Copy the keystore.p12 file in the [TOMCAT]/conf folder
+Edit the server.xml file:
+    <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443"
+               maxParameterCount="1000"
+               />
+
+
+    <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="150" SSLEnabled="true"
+               maxParameterCount="1000"
+               >
+        <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
+        <SSLHostConfig>
+            <Certificate certificateKeystoreFile="conf/keystore.p12"
+                         certificateKeystorePassword="changeit" 
+                         keystoreType="PKCS12" />
+        </SSLHostConfig>
+    </Connector>
