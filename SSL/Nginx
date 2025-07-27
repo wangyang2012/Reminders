@@ -1,15 +1,24 @@
 Edit /etc/nginx/nginx.conf
 Add below lines:
 
+
+# Redirect http to https
 server {
+    listen  80 default_server;
+    listen  [::]:80 default_server;
+    server_name localhost;
 
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
     listen               443 ssl;
-
 
     ssl                  on;
     ssl_certificate      /etc/ssl/certificate.crt;
     ssl_certificate_key  /etc/ssl/private.key;
-
 
     server_name  _;
     access_log   /var/log/nginx/nginx.vhost.access.log;
