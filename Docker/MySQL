@@ -1,6 +1,12 @@
 Install MySQL
 
 sudo docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-
 mysql -h localhost -P 3306 --protocol=tcp -u root -proot
 
+****** update 2026 ******
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql
+docker exec -it some-mysql mysql -u root -p
+    CREATE USER 'yang'@'%' IDENTIFIED BY 'motdepasse';
+    GRANT ALL PRIVILEGES ON *.* TO 'yang'@'%';
+    FLUSH PRIVILEGES;
+mysql -h 127.0.0.1 -P 3306 -u yang -p
